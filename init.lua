@@ -163,6 +163,71 @@ require('lazy').setup({
   },
 
   --------------------
+  -- Mason
+  --------------------
+  {
+    'williamboman/mason.nvim',
+    cmd = 'Mason',
+    keys = { { '<Leader>ma', ':Mason<cr>', desc = 'Mason' } },
+    opts = {
+      ensure_installed = {
+        'stylua',
+        'shfmt',
+        'autopep8',
+        'clang-format',
+      },
+    },
+    ---@param opts MasonSettings | {ensure_installed: string[]}
+    config = function(_, opts)
+      require('mason').setup(opts)
+      local mr = require('mason-registry')
+      local function ensure_installed()
+        for _, tool in ipairs(opts.ensure_installed) do
+          local p = mr.get_package(tool)
+          if not p:is_installed() then
+            p:install()
+          end
+        end
+      end
+      if mr.refresh then
+        mr.refresh(ensure_installed)
+      else
+        ensure_installed()
+      end
+    end,
+  },
+
+  --------------------
+  -- null-ls
+  --------------------
+  {
+    'jose-elias-alvarez/null-ls.nvim',
+    event = { 'BufReadPre', 'BufNewFile' },
+    dependencies = { 'mason.nvim' },
+    opts = function()
+      local nls = require('null-ls')
+      return {
+        root_dir = require('null-ls.utils').root_pattern('.null-ls-root', '.neoconf.json', 'Makefile', '.git'),
+        sources = {
+          nls.builtins.formatting.fish_indent,
+          nls.builtins.formatting.stylua.with({
+            extra_args = { '--indent-type', 'Spaces', '--indent-width', '2', '--quote-style', 'AutoPreferSingle' },
+          }),
+          nls.builtins.formatting.autopep8.with({
+            extra_args = { '--max-line-length', '100' },
+          }),
+          nls.builtins.formatting.clang_format.with({
+            extra_args = { '--style', 'Chromium' },
+          }),
+          nls.builtins.formatting.shfmt,
+          nls.builtins.diagnostics.fish,
+          nls.builtins.diagnostics.autopep8,
+        },
+      }
+    end,
+  },
+
+  --------------------
   -- Telescope
   --------------------
   {
@@ -274,7 +339,7 @@ require('lazy').setup({
       { 'tr', ':ToggleTerm dir=./ direction=vertical<CR>' },
       { 'tf', ':ToggleTerm dir=./ direction=float<CR>' },
       { 'tt', ':ToggleTerm dir=./ direction=float<CR>' },
-      { 'zg', M.lazygit_toggle},
+      { 'zg', M.lazygit_toggle },
     },
   },
 
@@ -444,59 +509,59 @@ require('lazy').setup({
   --------------------
   -- Formatter
   --------------------
-  {
-    'mhartington/formatter.nvim',
-    opts = {
-      filetype = {
-        python = {
-          function()
-            return {
-              exe = 'autopep8',
-              args = { '--max-line-length', 100, '-' },
-              stdin = true,
-            }
-          end,
-        },
-        cpp = {
-          function()
-            return {
-              exe = 'clang-format',
-              args = { '--assume-filename', vim.api.nvim_buf_get_name(0), '--style', 'Chromium' },
-              stdin = true,
-              cwd = vim.fn.getcwd(),
-            }
-          end,
-        },
-        rust = {
-          function()
-            return {
-              exe = 'rustfmt',
-              args = { ' ' },
-              stdin = true,
-            }
-          end,
-        },
-        cmake = {
-          function()
-            return {
-              exe = 'cmake-format',
-              args = { '-' },
-              stdin = true,
-            }
-          end,
-        },
-        lua = {
-          function()
-            return {
-              exe = 'stylua',
-              args = { '--indent-type Spaces --indent-width 2 --quote-style AutoPreferSingle -' },
-              stdin = true,
-            }
-          end,
-        },
-      },
-    },
-  },
+  -- {
+  -- 	"mhartington/formatter.nvim",
+  -- 	opts = {
+  -- 		filetype = {
+  -- 			python = {
+  -- 				function()
+  -- 					return {
+  -- 						exe = "autopep8",
+  -- 						args = { "--max-line-length", 100, "-" },
+  -- 						stdin = true,
+  -- 					}
+  -- 				end,
+  -- 			},
+  -- 			cpp = {
+  -- 				function()
+  -- 					return {
+  -- 						exe = "clang-format",
+  -- 						args = { "--assume-filename", vim.api.nvim_buf_get_name(0), "--style", "Chromium" },
+  -- 						stdin = true,
+  -- 						cwd = vim.fn.getcwd(),
+  -- 					}
+  -- 				end,
+  -- 			},
+  -- 			rust = {
+  -- 				function()
+  -- 					return {
+  -- 						exe = "rustfmt",
+  -- 						args = { " " },
+  -- 						stdin = true,
+  -- 					}
+  -- 				end,
+  -- 			},
+  -- 			cmake = {
+  -- 				function()
+  -- 					return {
+  -- 						exe = "cmake-format",
+  -- 						args = { "-" },
+  -- 						stdin = true,
+  -- 					}
+  -- 				end,
+  -- 			},
+  -- 			lua = {
+  -- 				function()
+  -- 					return {
+  -- 						exe = "stylua",
+  -- 						args = { "--indent-type Spaces --indent-width 2 --quote-style AutoPreferSingle -" },
+  -- 						stdin = true,
+  -- 					}
+  -- 				end,
+  -- 			},
+  -- 		},
+  -- 	},
+  -- },
 
   --------------------
   -- Indent-line

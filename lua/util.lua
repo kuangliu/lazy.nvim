@@ -25,7 +25,6 @@ function M.nvim_tree_close_node(node)
   renderer.draw()
 end
 
-
 function M.nvim_tree_find()
   local view = require('nvim-tree.view')
   if view.is_visible() then
@@ -39,7 +38,6 @@ function M.nvim_tree_find()
     end
   end
 end
-
 
 function M.lazygit_toggle()
   local Terminal = require('toggleterm.terminal').Terminal
@@ -56,7 +54,6 @@ function M.lazygit_toggle()
   lazygit:toggle()
 end
 
-
 -- Close all other buffers
 function M.buf_only()
   vim.cmd([[BufferLineCloseLeft]])
@@ -65,7 +62,6 @@ function M.buf_only()
   local ui = lazy.require('bufferline.ui')
   ui.refresh()
 end
-
 
 -- Move current buffer vsp
 function M.move_buf_vsp()

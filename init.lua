@@ -198,6 +198,27 @@ require('lazy').setup({
   },
 
   --------------------
+  -- Copilot
+  --------------------
+  {
+    'zbirenbaum/copilot.lua',
+    cmd = 'Copilot',
+    build = ':Copilot auth',
+    opts = {
+      suggestion = { enabled = false },
+      panel = { enabled = false },
+    },
+  },
+
+  {
+    'zbirenbaum/copilot-cmp',
+    after = { 'copilot.lua' },
+    config = function()
+      require('copilot_cmp').setup()
+    end,
+  },
+
+  --------------------
   -- null-ls
   --------------------
   {
@@ -608,6 +629,7 @@ require('lazy').setup({
           end,
         },
         sources = {
+          { name = 'copilot' },
           { name = 'luasnip' },
           { name = 'nvim_lsp' },
           { name = 'buffer' },

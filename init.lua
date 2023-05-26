@@ -204,17 +204,17 @@ require('lazy').setup({
     'zbirenbaum/copilot.lua',
     cmd = 'Copilot',
     build = ':Copilot auth',
-    opts = {
-      suggestion = { enabled = false },
-      panel = { enabled = false },
-    },
-  },
-
-  {
-    'zbirenbaum/copilot-cmp',
-    after = { 'copilot.lua' },
     config = function()
-      require('copilot_cmp').setup()
+      require('copilot').setup({
+        suggestion = {
+          auto_trigger = true,
+          keymap = {
+            accept = '<S-l>',
+            prev = '<C-h>',
+            next = '<C-l>',
+          },
+        },
+      })
     end,
   },
 
@@ -528,63 +528,6 @@ require('lazy').setup({
   },
 
   --------------------
-  -- Formatter
-  --------------------
-  -- {
-  -- 	"mhartington/formatter.nvim",
-  -- 	opts = {
-  -- 		filetype = {
-  -- 			python = {
-  -- 				function()
-  -- 					return {
-  -- 						exe = "autopep8",
-  -- 						args = { "--max-line-length", 100, "-" },
-  -- 						stdin = true,
-  -- 					}
-  -- 				end,
-  -- 			},
-  -- 			cpp = {
-  -- 				function()
-  -- 					return {
-  -- 						exe = "clang-format",
-  -- 						args = { "--assume-filename", vim.api.nvim_buf_get_name(0), "--style", "Chromium" },
-  -- 						stdin = true,
-  -- 						cwd = vim.fn.getcwd(),
-  -- 					}
-  -- 				end,
-  -- 			},
-  -- 			rust = {
-  -- 				function()
-  -- 					return {
-  -- 						exe = "rustfmt",
-  -- 						args = { " " },
-  -- 						stdin = true,
-  -- 					}
-  -- 				end,
-  -- 			},
-  -- 			cmake = {
-  -- 				function()
-  -- 					return {
-  -- 						exe = "cmake-format",
-  -- 						args = { "-" },
-  -- 						stdin = true,
-  -- 					}
-  -- 				end,
-  -- 			},
-  -- 			lua = {
-  -- 				function()
-  -- 					return {
-  -- 						exe = "stylua",
-  -- 						args = { "--indent-type Spaces --indent-width 2 --quote-style AutoPreferSingle -" },
-  -- 						stdin = true,
-  -- 					}
-  -- 				end,
-  -- 			},
-  -- 		},
-  -- 	},
-  -- },
-
-  --------------------
   -- Indent-line
   --------------------
   {
@@ -629,7 +572,7 @@ require('lazy').setup({
           end,
         },
         sources = {
-          { name = 'copilot' },
+          -- { name = 'copilot' },
           { name = 'luasnip' },
           { name = 'nvim_lsp' },
           { name = 'buffer' },

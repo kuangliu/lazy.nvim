@@ -46,6 +46,10 @@ map('n', 'cc', 'ciw')
 -- Copy to clipboard
 map('v', '<Leader>y', '"+y')
 
+-- Copy & replace word
+map('n', '<Leader>y', 'yiw')
+map('n', '<Leader>p', 'viwp')
+
 -- Replace word under cursor
 -- map('n', '<Leader>r', ':%s/\\<<c-r><c-w>\\>//g<left><left>', { silent=false })
 

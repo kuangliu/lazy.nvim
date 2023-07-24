@@ -138,6 +138,9 @@ require('lazy').setup({
       { '<leader>f', M.nvim_tree_find },
       { '<S-r>', ':NvimTreeRefresh<cr>' },
     },
+    init = function()
+      vim.cmd([[autocmd BufEnter * lua require('nvim-tree').find_file(false)]])
+    end,
   },
 
   --------------------

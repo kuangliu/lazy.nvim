@@ -439,7 +439,7 @@ require('lazy').setup({
   -- Bufferline
   --------------------
   {
-    'akinsho/bufferline.nvim',
+    'kuangliu/bufferline.nvim',
     dependencies = { 'kyazdani42/nvim-web-devicons' },
     opts = {
       options = {

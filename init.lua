@@ -200,6 +200,9 @@ require('lazy').setup({
     end,
   },
 
+  --------------------
+  -- Conform
+  --------------------
   {
     'stevearc/conform.nvim',
     config = function()
@@ -377,7 +380,7 @@ require('lazy').setup({
         max_path_length = 80,
       })
 
-      local config_group = vim.api.nvim_create_augroup('MyConfigGroup', {}) -- A global group for all your config autocommands
+      local config_group = vim.api.nvim_create_augroup('MyConfigGroup', {})
       vim.api.nvim_create_autocmd({ 'SessionLoadPost' }, {
         group = config_group,
         callback = function()
@@ -404,10 +407,7 @@ require('lazy').setup({
       extensions = { 'nvim-tree', 'toggleterm' },
       sections = {
         lualine_c = {
-          {
-            'filename',
-            path = 2,
-          },
+          { 'filename', path = 2 },
         },
       },
     },
@@ -495,14 +495,7 @@ require('lazy').setup({
       require('nvim-treesitter.configs').setup({
         highlight = {
           enable = true,
-          custom_captures = {
-            -- Highlight the @foo.bar capture group with the "Identifier" highlight group.
-            ['foo.bar'] = 'Identifier',
-          },
-          -- Setting this to true will run `:h syntax` and tree-sitter at the same time.
-          -- Set this to `true` if you depend on 'syntax' being enabled (like for indentation).
-          -- Using this option may slow down your editor, and you may see some duplicate highlights.
-          -- Instead of true it can also be a list of languages
+          custom_captures = { ['foo.bar'] = 'Identifier' },
           additional_vim_regex_highlighting = false,
         },
       })
@@ -546,7 +539,7 @@ require('lazy').setup({
       require('luasnip.loaders.from_vscode').load()
 
       local has_words_before = function()
-        local line, col = unpack(vim.api.nvim_win_get_cursor(0))
+        local line, col = table.unpack(vim.api.nvim_win_get_cursor(0))
         return col ~= 0 and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match('%s') == nil
       end
 
@@ -605,11 +598,7 @@ require('lazy').setup({
       vim.api.nvim_create_autocmd('LspAttach', {
         group = vim.api.nvim_create_augroup('UserLspConfig', {}),
         callback = function(ev)
-          -- Enable completion triggered by <c-x><c-o>
           vim.bo[ev.buf].omnifunc = 'v:lua.vim.lsp.omnifunc'
-
-          -- Buffer local mappings.
-          -- See `:help vim.lsp.*` for documentation on any of the below functions
           local opts = { buffer = ev.buf }
           vim.keymap.set('n', 'K', vim.lsp.buf.hover, opts)
           vim.keymap.set('n', 'gd', vim.lsp.buf.definition, opts)
@@ -656,7 +645,6 @@ require('lazy').setup({
       map(']]', 'next')
       map('[[', 'prev')
 
-      -- also set it after loading ftplugins, since a lot overwrite [[ and ]]
       vim.api.nvim_create_autocmd('FileType', {
         callback = function()
           local buffer = vim.api.nvim_get_current_buf()

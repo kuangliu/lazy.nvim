@@ -76,7 +76,11 @@ require('lazy').setup({
           custom_only = false,
           list = {
             { key = { 'l', '<CR>', 'o', 'e' }, action = 'edit' },
-            { key = 'h', action = 'my_close_node', action_cb = M.nvim_tree_close_node },
+            {
+              key = 'h',
+              action = 'my_close_node',
+              action_cb = M.nvim_tree_close_node,
+            },
             { key = 'i', action = 'vsplit' },
           },
         },
@@ -104,8 +108,7 @@ require('lazy').setup({
             git = true,
           },
           glyphs = {
-            -- default = '',
-            default = '',
+            default = '',
             symlink = '',
             bookmark = '',
             folder = {
@@ -119,12 +122,10 @@ require('lazy').setup({
               symlink_open = '',
             },
             git = {
-              -- unstaged = '✗',
               unstaged = '•',
               staged = '✓',
               unmerged = '',
               renamed = '➜',
-              -- untracked = '★',
               untracked = '✗',
               deleted = '',
               ignored = '◌',
@@ -135,7 +136,7 @@ require('lazy').setup({
     },
     config = true,
     keys = {
-      { '<leader>f', M.nvim_tree_find },
+      { '<Leader>f', M.nvim_tree_find },
       { '<S-r>', ':NvimTreeRefresh<cr>' },
     },
     init = function()
@@ -180,7 +181,6 @@ require('lazy').setup({
         'clang-format',
       },
     },
-    ---@param opts MasonSettings | {ensure_installed: string[]}
     config = function(_, opts)
       require('mason').setup(opts)
       local mr = require('mason-registry')
@@ -200,55 +200,33 @@ require('lazy').setup({
     end,
   },
 
-  --------------------
-  -- Copilot
-  --------------------
   {
-    'zbirenbaum/copilot.lua',
-    cmd = 'Copilot',
-    build = ':Copilot auth',
+    'stevearc/conform.nvim',
     config = function()
-      require('copilot').setup({
-        suggestion = {
-          auto_trigger = true,
-          keymap = {
-            accept = '<S-l>',
-            prev = '<C-h>',
-            next = '<C-l>',
-          },
+      local confrom = require('conform')
+      confrom.formatters.stylua = {
+        prepend_args = { '--indent-type', 'Spaces', '--indent-width', '2', '--quote-style', 'AutoPreferSingle' },
+      }
+      confrom.formatters.autopep8 = {
+        prepend_args = { '--max-line-length', '120' },
+      }
+      confrom.setup({
+        formatters_by_ft = {
+          lua = { 'stylua' },
+          python = { 'autopep8' },
         },
       })
     end,
-  },
-
-  --------------------
-  -- null-ls
-  --------------------
-  {
-    'jose-elias-alvarez/null-ls.nvim',
-    event = { 'BufReadPre', 'BufNewFile' },
-    dependencies = { 'mason.nvim' },
-    opts = function()
-      local nls = require('null-ls')
-      return {
-        root_dir = require('null-ls.utils').root_pattern('.null-ls-root', '.neoconf.json', 'Makefile', '.git'),
-        sources = {
-          nls.builtins.formatting.fish_indent,
-          nls.builtins.formatting.stylua.with({
-            extra_args = { '--indent-type', 'Spaces', '--indent-width', '2', '--quote-style', 'AutoPreferSingle' },
-          }),
-          nls.builtins.formatting.autopep8.with({
-            extra_args = { '--max-line-length', '100' },
-          }),
-          nls.builtins.formatting.clang_format.with({
-            extra_args = { '--style', 'Chromium' },
-          }),
-          nls.builtins.formatting.shfmt,
-          nls.builtins.diagnostics.fish,
-          nls.builtins.diagnostics.autopep8,
-        },
-      }
-    end,
+    keys = {
+      {
+        '1',
+        function()
+          require('conform').format({ async = false, lsp_fallback = true })
+          vim.cmd('w')
+        end,
+        mode = 'n',
+      },
+    },
   },
 
   --------------------
@@ -300,8 +278,8 @@ require('lazy').setup({
       })
     end,
     keys = {
-      { '<leader>c', ':CommentToggle<cr>', mode = 'v' },
-      { '<leader>c', ':CommentToggle<cr>', mode = 'n' },
+      { '<Leader>c', ':CommentToggle<cr>', mode = 'v' },
+      { '<Leader>c', ':CommentToggle<cr>', mode = 'n' },
     },
   },
 
@@ -576,7 +554,6 @@ require('lazy').setup({
           end,
         },
         sources = {
-          -- { name = 'copilot' },
           { name = 'luasnip' },
           { name = 'nvim_lsp' },
           { name = 'buffer' },
@@ -620,42 +597,27 @@ require('lazy').setup({
   {
     'neovim/nvim-lspconfig',
     config = function()
+      vim.api.nvim_create_autocmd('LspAttach', {
+        group = vim.api.nvim_create_augroup('UserLspConfig', {}),
+        callback = function(ev)
+          -- Enable completion triggered by <c-x><c-o>
+          vim.bo[ev.buf].omnifunc = 'v:lua.vim.lsp.omnifunc'
+
+          -- Buffer local mappings.
+          -- See `:help vim.lsp.*` for documentation on any of the below functions
+          local opts = { buffer = ev.buf }
+          vim.keymap.set('n', 'K', vim.lsp.buf.hover, opts)
+          vim.keymap.set('n', 'gd', vim.lsp.buf.definition, opts)
+          vim.keymap.set('n', 'gi', vim.lsp.buf.implementation, opts)
+          vim.keymap.set('n', '<Leader>r', vim.lsp.buf.rename, opts)
+        end,
+      })
+
       local nvim_lsp = require('lspconfig')
 
-      -- Use an on_attach function to only map the following keys
-      -- after the language server attaches to the current buffer
-      local on_attach = function(client, bufnr)
-        local function buf_set_keymap(...)
-          vim.api.nvim_buf_set_keymap(bufnr, ...)
-        end
-        local function buf_set_option(...)
-          vim.api.nvim_buf_set_option(bufnr, ...)
-        end
+      nvim_lsp['lua_ls'].setup({})
 
-        -- Enable completion triggered by <c-x><c-o>
-        buf_set_option('omnifunc', 'v:lua.vim.lsp.omnifunc')
-
-        -- Mappings.
-        local opts = { noremap = true, silent = true }
-
-        buf_set_keymap('n', '<Leader>r', '<cmd>lua vim.lsp.buf.rename()<CR>', opts)
-        -- buf_set_keymap('n', '<Leader>ca', '<cmd>lua vim.lsp.buf.code_action()<CR>', opts)
-        buf_set_keymap('n', 'gD', '<cmd>lua vim.lsp.buf.declaration()<CR>', opts)
-        buf_set_keymap('n', 'gd', '<cmd>lua vim.lsp.buf.definition()<CR>', opts)
-        buf_set_keymap('n', 'K', '<cmd>lua vim.lsp.buf.hover()<CR>', opts)
-        buf_set_keymap('n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<CR>', opts)
-        buf_set_keymap('n', 'gr', '<cmd>lua vim.lsp.buf.references()<CR>', opts)
-        -- buf_set_keymap('n', '<Leader>f', '<cmd>lua vim.lsp.buf.formatting()<CR>', opts)  -- pyright can't do formatting
-        -- vim.api.nvim_command[[autocmd BufWritePre <buffer> lua vim.lsp.buf.formatting_sync()]]
-      end
-
-      nvim_lsp['pyright'].setup({
-        on_attach = on_attach,
-      })
-
-      nvim_lsp['clangd'].setup({
-        on_attach = on_attach,
-      })
+      nvim_lsp['pyright'].setup({})
     end,
   },
 

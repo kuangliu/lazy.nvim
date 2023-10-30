@@ -16,9 +16,6 @@ map('n', '<ESC>', ':w|nohlsearch<CR>')
 -- Save while existing insert mode
 map('i', '<ESC>', '<ESC>:w<CR>')
 
--- Map 1 to reformat
-map('n', '1', ':lua vim.lsp.buf.format()<CR>')
-
 -- Map 2 to toggle float term
 map('n', '2', ':ToggleTerm dir=./ direction=float<CR>')
 

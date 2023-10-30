@@ -71,8 +71,8 @@ function M.move_buf_vsp()
     return
   end
   local file_path = vim.fn.expand('%:p') -- get current file path
-  vim.cmd([[bp | bd #]]) -- close current buffer
-  vim.cmd('vsp ' .. file_path) -- reopen in vsp
+  vim.cmd([[bp | bd #]])                 -- close current buffer
+  vim.cmd('vsp ' .. file_path)           -- reopen in vsp
 end
 
 return M

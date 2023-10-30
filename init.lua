@@ -67,7 +67,6 @@ require('lazy').setup({
   {
     'kuangliu/nvim-tree.lua',
     dependencies = { 'kyazdani42/nvim-web-devicons' },
-    lazy = false,
     opts = {
       view = {
         width = 30,
@@ -302,7 +301,6 @@ require('lazy').setup({
   --------------------
   {
     'akinsho/toggleterm.nvim',
-    lazy = false,
     opts = {
       -- size can be a number or function which is passed the current terminal
       size = function(term)

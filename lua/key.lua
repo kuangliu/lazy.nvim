@@ -47,9 +47,6 @@ map('v', '<Leader>y', '"+y')
 map('n', '<Leader>y', 'yiw')
 map('n', '<Leader>p', 'viwp')
 
--- Replace word under cursor
--- map('n', '<Leader>r', ':%s/\\<<c-r><c-w>\\>//g<left><left>', { silent=false })
-
 -- CMake
 map('n', '@b', ':!cmake -S . -B build -DCMAKE_EXPORT_COMPILE_COMMANDS=ON && cmake --build build<CR>')
 map('n', '@g', ':!./build/main<CR>')

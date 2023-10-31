@@ -159,6 +159,9 @@ require('lazy').setup({
   --------------------
   {
     'kuangliu/vim-easymotion',
+    init = function()
+      vim.g.EasyMotion_verbose = 0
+    end,
     keys = {
       { 's', '<Plug>(easymotion-s2)' },
       { 'f', '<Plug>(easymotion-sl)' },

@@ -355,10 +355,8 @@ require('lazy').setup({
   -- Surround
   --------------------
   {
-    'ur4ltz/surround.nvim',
-    config = function()
-      require('surround').setup({ mappings_style = 'surround' })
-    end,
+    'kylechui/nvim-surround',
+    config = true,
   },
 
   --------------------

@@ -494,11 +494,14 @@ require('lazy').setup({
     'nvim-treesitter/nvim-treesitter',
     config = function()
       require('nvim-treesitter.configs').setup({
+        ensure_installed = { 'cpp', 'lua', 'python' },
+        sync_install = false,
+        auto_install = true,
         highlight = {
           enable = true,
-          custom_captures = { ['foo.bar'] = 'Identifier' },
           additional_vim_regex_highlighting = false,
         },
+        indent = { enable = true },
       })
     end,
   },
@@ -633,6 +636,7 @@ require('lazy').setup({
       large_file_overrides = {
         providers = { 'lsp' },
       },
+      filetypes_denylist = { 'NvimTree' },
     },
     config = function(_, opts)
       require('illuminate').configure(opts)

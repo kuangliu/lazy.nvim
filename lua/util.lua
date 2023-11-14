@@ -44,7 +44,7 @@ function M.lazygit_toggle()
   local lazygit = Terminal:new({
     cmd = 'lazygit',
     direction = 'float',
-    hidden = true,
+    hidden = false,
     float_opts = {
       border = 'curved',
       width = math.floor(vim.api.nvim_win_get_width(0) * 0.9),

@@ -343,7 +343,7 @@ require('lazy').setup({
       },
     },
     keys = {
-      { '<esc>', [[<C-\><C-n>:q<CR>]], mode = 't' },
+      { '<esc>', [[<C-\><C-n>]], mode = 't' },
       { 'tb', ':ToggleTerm dir=./ direction=horizontal<CR>' },
       { 'tr', ':ToggleTerm dir=./ direction=vertical<CR>' },
       { 'tf', ':ToggleTerm dir=./ direction=float<CR>' },

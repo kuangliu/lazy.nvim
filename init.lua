@@ -155,16 +155,14 @@ require('lazy').setup({
   },
 
   --------------------
-  -- Vim-easymotion
+  -- Flash
   --------------------
   {
-    'kuangliu/vim-easymotion',
-    init = function()
-      vim.g.EasyMotion_verbose = 0
-    end,
+    'folke/flash.nvim',
+    event = 'VeryLazy',
+    -- stylua: ignore
     keys = {
-      { 's', '<Plug>(easymotion-s2)' },
-      { 'f', '<Plug>(easymotion-sl)' },
+      { "s", mode = { "n", "x", "o" }, function() require("flash").jump() end, desc = "Flash" },
     },
   },
 
@@ -573,6 +571,7 @@ require('lazy').setup({
         Event = '',
         Operator = '󰆕',
         TypeParameter = '󰅲',
+        Codeium = '',
       }
 
       local cmp = require('cmp')
@@ -585,6 +584,7 @@ require('lazy').setup({
         },
         sources = {
           { name = 'luasnip' },
+          { name = 'codeium' },
           { name = 'nvim_lsp' },
           { name = 'buffer' },
           { name = 'path' },
@@ -627,6 +627,7 @@ require('lazy').setup({
               nvim_lsp = '[LSP]',
               luasnip = '[LuaSnip]',
               nvim_lua = '[Lua]',
+              codeium = '[Codeium]',
               latex_symbols = '[LaTeX]',
             })[entry.source.name]
             return vim_item
@@ -660,11 +661,31 @@ require('lazy').setup({
       })
 
       local nvim_lsp = require('lspconfig')
-
       nvim_lsp['lua_ls'].setup({})
-
       nvim_lsp['pyright'].setup({})
+      nvim_lsp['rust_analyzer'].setup({})
     end,
+  },
+
+  --------------------
+  -- Lsp-signature
+  --------------------
+  {
+    'ray-x/lsp_signature.nvim',
+    opts = {
+      handler_opts = {
+        border = 'none',
+      },
+    },
+    config = true,
+  },
+
+  --------------------
+  -- Codeium
+  --------------------
+  {
+    'Exafunction/codeium.nvim',
+    config = true,
   },
 
   --------------------

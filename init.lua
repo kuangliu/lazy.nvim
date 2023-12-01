@@ -240,11 +240,28 @@ require('lazy').setup({
     dependencies = {
       'nvim-lua/plenary.nvim',
       'nvim-telescope/telescope-ui-select.nvim',
+      {
+        'nvim-telescope/telescope-fzf-native.nvim',
+        build = 'make',
+      },
     },
     keys = {
       { '<c-f>', ':Telescope find_files find_command=fd,--hidden,--no-ignore<cr>' },
       { '<c-g>', ':Telescope live_grep<cr>' },
     },
+    config = function()
+      require('telescope').setup({
+        extensions = {
+          fzf = {
+            fuzzy = true,
+            override_generic_sorter = true,
+            override_file_sorter = true,
+            case_mode = 'smart_case',
+          },
+        },
+      })
+      require('telescope').load_extension('fzf')
+    end,
   },
 
   --------------------
@@ -571,7 +588,7 @@ require('lazy').setup({
         Event = '',
         Operator = '󰆕',
         TypeParameter = '󰅲',
-        Codeium = '',
+        -- Codeium = '',
       }
 
       local cmp = require('cmp')
@@ -584,7 +601,7 @@ require('lazy').setup({
         },
         sources = {
           { name = 'luasnip' },
-          { name = 'codeium' },
+          -- { name = 'codeium' },
           { name = 'nvim_lsp' },
           { name = 'buffer' },
           { name = 'path' },
@@ -627,7 +644,7 @@ require('lazy').setup({
               nvim_lsp = '[LSP]',
               luasnip = '[LuaSnip]',
               nvim_lua = '[Lua]',
-              codeium = '[Codeium]',
+              -- codeium = '[Codeium]',
               latex_symbols = '[LaTeX]',
             })[entry.source.name]
             return vim_item
@@ -677,14 +694,6 @@ require('lazy').setup({
         border = 'none',
       },
     },
-    config = true,
-  },
-
-  --------------------
-  -- Codeium
-  --------------------
-  {
-    'Exafunction/codeium.nvim',
     config = true,
   },
 

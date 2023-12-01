@@ -242,7 +242,7 @@ require('lazy').setup({
       'nvim-telescope/telescope-ui-select.nvim',
     },
     keys = {
-      { '<c-f>', ':Telescope find_files<cr>' },
+      { '<c-f>', ':Telescope find_files find_command=fd,--hidden,--no-ignore<cr>' },
       { '<c-g>', ':Telescope live_grep<cr>' },
     },
   },

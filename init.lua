@@ -163,23 +163,28 @@ require('lazy').setup({
     opts = {
       search = { multi_window = false },
       label = { uppercase = false },
-    },
-    -- stylua: ignore
-    keys = {
-      { "s", mode = { "n", "x", "o" }, function() require("flash").jump() end, desc = "Flash" },
+      modes = {
+        search = { enabled = false },
+        char = { enabled = false },
+      },
     },
     config = function(_, opts)
       require('flash').setup(opts)
       local hls = {
         FlashMatch = { fg = '#61afef' },
         FlashCurrent = { fg = '#61afef' },
-        FlashLabel = { fg = '#e06c75', bold = true },
+        FlashLabel = { fg = '#e06c75' },
       }
       for hl_group, hl in pairs(hls) do
         hl.default = true
         vim.api.nvim_set_hl(0, hl_group, hl)
       end
     end,
+    -- stylua: ignore
+    keys = {
+      { "s", mode = { "n", "x", "o" }, function() require("flash").jump() end, desc = "Flash" },
+      { "f", mode = { "n", "x", "o" }, M.hopword, desc = "Hopword" },
+    },
   },
 
   --------------------

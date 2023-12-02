@@ -8,7 +8,7 @@ if not vim.loop.fs_stat(lazypath) then
     'clone',
     '--filter=blob:none',
     'https://github.com/folke/lazy.nvim.git',
-    '--branch=stable', -- latest stable release
+    '--branch=stable',
     lazypath,
   })
 end
@@ -20,15 +20,15 @@ vim.opt.rtp:prepend(lazypath)
 require('key')
 
 local default_options = {
-  number = true, -- show number
-  expandtab = true, -- expand tabs into spaces
-  shiftwidth = 2, -- shift lines by 2 spaces
-  tabstop = 2, -- 2 whitespaces for tabs visual presentation
-  cursorline = true, -- highlight current row
-  cursorcolumn = true, -- highlight current column
-  scrolloff = 10, -- let 10 lines before/after cursor during scroll
-  fileencoding = 'utf-8', -- the encoding written to a file
-  termguicolors = true, -- set color
+  number = true,
+  expandtab = true,
+  shiftwidth = 2,
+  tabstop = 2,
+  cursorline = true,
+  cursorcolumn = true,
+  scrolloff = 10,
+  fileencoding = 'utf-8',
+  termguicolors = true,
   splitbelow = true,
   splitright = true,
   clipboard = 'unnamedplus',
@@ -36,7 +36,7 @@ local default_options = {
   ignorecase = true,
   shell = 'zsh',
   mouse = 'v',
-  so = 999, -- scroll with cursor centering
+  so = 999,
   cmdheight = 0,
 }
 
@@ -107,8 +107,8 @@ require('lazy').setup({
             git = true,
           },
           glyphs = {
-            default = '',
-            -- default = '', -- for mac
+            -- default = '',
+            default = '', -- for mac
             symlink = '',
             bookmark = '',
             folder = {
@@ -156,7 +156,7 @@ require('lazy').setup({
   },
 
   --------------------
-  -- Flash
+  -- Flash Jump
   --------------------
   {
     'folke/flash.nvim',
@@ -223,7 +223,7 @@ require('lazy').setup({
   },
 
   --------------------
-  -- Conform
+  -- Conform reformat
   --------------------
   {
     'stevearc/conform.nvim',
@@ -292,16 +292,7 @@ require('lazy').setup({
   {
     'karb94/neoscroll.nvim',
     opts = {
-      -- All these keys will be mapped to their corresponding default scrolling animation
-      mappings = { '<C-u>', '<C-d>', '<C-y>', '<C-e>', 'zt', 'zz', 'zb' },
-      hide_cursor = true, -- Hide cursor while scrolling
-      stop_eof = true, -- Stop at <EOF> when scrolling downwards
-      use_local_scrolloff = false, -- Use the local scope of scrolloff instead of the global scope
-      respect_scrolloff = false, -- Stop scrolling when the cursor reaches the scrolloff margin of the file
-      cursor_scrolls_alone = true, -- The cursor will keep on scrolling even if the window cannot scroll further
-      easing_function = nil, -- Default easing function
-      pre_hook = nil, -- Function to run before the scrolling animation starts
-      post_hook = nil, -- Function to run after the scrolling animation ends
+      mappings = { '<C-u>', '<C-d>' },
     },
   },
 
@@ -350,17 +341,9 @@ require('lazy').setup({
           return vim.o.columns * 0.4
         end
       end,
-      open_mapping = [[<c-\>]],
-      hide_numbers = true,
-      shade_filetypes = {},
       shade_terminals = false,
       shading_factor = 1,
-      start_in_insert = true,
-      insert_mappings = true,
-      persist_size = true,
       persist_mode = false,
-      close_on_exit = true,
-      shell = vim.o.shell,
       float_opts = {
         border = 'curved',
         width = math.floor(vim.api.nvim_win_get_width(0) * 0.9),
@@ -404,9 +387,7 @@ require('lazy').setup({
         autoload_mode = require('session_manager.config').AutoloadMode.CurrentDir,
         autosave_last_session = true,
         autosave_ignore_not_normal = true,
-        autosave_ignore_filetypes = {
-          'gitcommit',
-        },
+        autosave_ignore_filetypes = { 'gitcommit' },
         autosave_only_in_session = false,
         max_path_length = 80,
       })
@@ -436,11 +417,7 @@ require('lazy').setup({
         globalstatus = true,
       },
       extensions = { 'nvim-tree', 'toggleterm' },
-      sections = {
-        lualine_c = {
-          { 'filename', path = 2 },
-        },
-      },
+      sections = { lualine_c = { { 'filename', path = 2 } } },
     },
   },
 
@@ -512,9 +489,7 @@ require('lazy').setup({
   --------------------
   {
     'windwp/nvim-autopairs',
-    config = function()
-      require('nvim-autopairs').setup({})
-    end,
+    config = true,
   },
 
   --------------------
@@ -544,9 +519,7 @@ require('lazy').setup({
     event = { 'BufReadPost', 'BufNewFile' },
     main = 'ibl',
     opts = {
-      indent = {
-        char = '│',
-      },
+      indent = { char = '│' },
       scope = {
         enabled = true,
         show_start = false,
@@ -569,7 +542,6 @@ require('lazy').setup({
       'kuangliu/friendly-snippets',
     },
     config = function()
-      -- LuaSnip
       require('luasnip.loaders.from_vscode').load()
 
       local has_words_before = function()
@@ -679,7 +651,7 @@ require('lazy').setup({
         formatting = {
           format = function(entry, vim_item)
             -- Kind icons
-            vim_item.kind = string.format('%s %s', kind_icons[vim_item.kind], vim_item.kind) -- This concatonates the icons with the name of the item kind
+            vim_item.kind = string.format('%s %s', kind_icons_mac[vim_item.kind], vim_item.kind) -- This concatonates the icons with the name of the item kind
             -- Source
             vim_item.menu = ({
               buffer = '[Buffer]',
@@ -731,11 +703,7 @@ require('lazy').setup({
   --------------------
   {
     'ray-x/lsp_signature.nvim',
-    opts = {
-      handler_opts = {
-        border = 'none',
-      },
-    },
+    opts = { handler_opts = { border = 'none' } },
     config = true,
   },
 
@@ -745,37 +713,6 @@ require('lazy').setup({
   {
     'RRethy/vim-illuminate',
     event = { 'BufReadPost', 'BufNewFile' },
-    opts = {
-      delay = 200,
-      large_file_cutoff = 2000,
-      large_file_overrides = {
-        providers = { 'lsp' },
-      },
-      filetypes_denylist = { 'NvimTree' },
-    },
-    config = function(_, opts)
-      require('illuminate').configure(opts)
-
-      local function map(key, dir, buffer)
-        vim.keymap.set('n', key, function()
-          require('illuminate')['goto_' .. dir .. '_reference'](false)
-        end, { desc = dir:sub(1, 1):upper() .. dir:sub(2) .. ' Reference', buffer = buffer })
-      end
-
-      map(']]', 'next')
-      map('[[', 'prev')
-
-      vim.api.nvim_create_autocmd('FileType', {
-        callback = function()
-          local buffer = vim.api.nvim_get_current_buf()
-          map(']]', 'next', buffer)
-          map('[[', 'prev', buffer)
-        end,
-      })
-    end,
-    keys = {
-      { ']]', desc = 'Next Reference' },
-      { '[[', desc = 'Prev Reference' },
-    },
+    config = true,
   },
 })

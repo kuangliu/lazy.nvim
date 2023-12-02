@@ -3,10 +3,10 @@ local M = {}
 function M.save_file()
   buftype = vim.bo.buftype
   if buftype == 'nofile' or buftype == 'terminal' then
-    vim.api.nvim_command('nohlsearch')
+    vim.cmd([[nohlsearch]])
     return
   end
-  vim.api.nvim_command('w|nohlsearch')
+  vim.cmd([[w|nohlsearch]])
 end
 
 function M.nvim_tree_close_node(node)
@@ -38,13 +38,13 @@ function M.nvim_tree_find()
   local view = require('nvim-tree.view')
   if view.is_visible() then
     view.close()
+    return
+  end
+  local buf = vim.api.nvim_buf_get_name(0)
+  if string.len(buf) == 0 then
+    require('nvim-tree').toggle(false)
   else
-    local buf = vim.api.nvim_buf_get_name(0)
-    if string.len(buf) == 0 then
-      require('nvim-tree').toggle(false)
-    else
-      require('nvim-tree').find_file(true)
-    end
+    require('nvim-tree').find_file(true)
   end
 end
 

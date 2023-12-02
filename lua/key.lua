@@ -28,11 +28,11 @@ map('n', 'Q', ':wqa!<CR>')
 map('n', '<Leader>dk', '^hvk$d<CR>')
 
 -- Delete from cursor to end of previsou line
-map('n', 'dk', 'vk$d')
+map('n', 'dk', '^hvk$d')
 
 -- Move current line up and down
-map('n', '<c-k>', ':move -2<CR>')
-map('n', '<c-j>', ':move +1<CR>')
+map('n', '<C-k>', ':move -2<CR>')
+map('n', '<C-j>', ':move +1<CR>')
 
 -- Fix indent blocks
 map('v', '<', '<gv')
@@ -55,10 +55,10 @@ map('n', '@g', ':!./build/main<CR>')
 ----------------------
 -- Window settings
 ----------------------
-map('n', '<s-l>', ':vertical resize -5<CR>')
-map('n', '<s-h>', ':vertical resize +5<CR>')
-map('n', '<s-k>', ':resize +5<CR>')
-map('n', '<s-j>', ':resize -5<CR>')
+map('n', '<S-l>', ':vertical resize -5<CR>')
+map('n', '<S-h>', ':vertical resize +5<CR>')
+map('n', '<S-k>', ':resize +5<CR>')
+map('n', '<S-j>', ':resize -5<CR>')
 
 ----------------------
 -- Terminal settings
@@ -74,6 +74,6 @@ map('n', '<Leader>l', ':wincmd l<CR>')
 map('n', '<TAB>', ':bn<CR>')
 map('n', ']b', ':bn<CR>')
 map('n', '[b', ':bp<CR>')
-map('n', '<Leader>bw', ':<c-u>bp <bar> bd #<CR>') -- quit current buffer
+map('n', '<Leader>bw', ':<C-u>bp <BAR> bd #<CR>') -- quit current buffer
 map('n', '<Leader>bo', M.buf_only)
 map('n', '<Leader>br', M.move_buf_vsp)

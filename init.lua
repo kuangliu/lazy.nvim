@@ -137,7 +137,7 @@ require('lazy').setup({
     config = true,
     keys = {
       { '<Leader>f', M.nvim_tree_find },
-      { '<S-r>', ':NvimTreeRefresh<cr>' },
+      { '<S-r>', ':NvimTreeRefresh<CR>' },
     },
     init = function()
       vim.cmd([[autocmd BufEnter * lua require('nvim-tree').find_file(false)]])
@@ -172,9 +172,9 @@ require('lazy').setup({
     config = function(_, opts)
       require('flash').setup(opts)
       local hls = {
-        FlashMatch = { fg = '#61afef' },
-        FlashCurrent = { fg = '#61afef' },
-        FlashLabel = { fg = '#e06c75' },
+        FlashMatch = { fg = '#61AFEF' },
+        FlashCurrent = { fg = '#61AFEF' },
+        FlashLabel = { fg = '#E06C75' },
       }
       for hl_group, hl in pairs(hls) do
         hl.default = true
@@ -183,8 +183,8 @@ require('lazy').setup({
     end,
     -- stylua: ignore
     keys = {
-      { "s", mode = { "n", "x", "o" }, function() require("flash").jump() end, desc = "Flash" },
-      { "f", mode = { "n", "x", "o" }, M.hopword, desc = "Hopword" },
+      { "s", mode = { "n", "x", "o" }, function() require("flash").jump() end },
+      { "f", mode = { "n", "x", "o" }, M.hopword },
     },
   },
 
@@ -194,7 +194,7 @@ require('lazy').setup({
   {
     'williamboman/mason.nvim',
     cmd = 'Mason',
-    keys = { { '<Leader>ma', ':Mason<cr>', desc = 'Mason' } },
+    keys = { { '<Leader>ma', ':Mason<CR>', desc = 'Mason' } },
     opts = {
       ensure_installed = {
         'stylua',
@@ -268,8 +268,8 @@ require('lazy').setup({
       },
     },
     keys = {
-      { '<c-f>', ':Telescope find_files find_command=fd,--hidden,--no-ignore<cr>' },
-      { '<c-g>', ':Telescope live_grep<cr>' },
+      { '<C-f>', ':Telescope find_files find_command=fd,--hidden,--no-ignore<CR>' },
+      { '<C-g>', ':Telescope live_grep<CR>' },
     },
     config = function()
       require('telescope').setup({
@@ -311,8 +311,7 @@ require('lazy').setup({
       })
     end,
     keys = {
-      { '<Leader>c', ':CommentToggle<cr>', mode = 'v' },
-      { '<Leader>c', ':CommentToggle<cr>', mode = 'n' },
+      { '<Leader>c', ':CommentToggle<CR>', mode = { 'n', 'v' } },
     },
   },
 
@@ -356,7 +355,7 @@ require('lazy').setup({
       },
     },
     keys = {
-      { '<esc>', [[<C-\><C-n>]], mode = 't' },
+      { '<ESC>', [[<C-\><C-n>]], mode = 't' },
       { 'tb', ':ToggleTerm dir=./ direction=horizontal<CR>' },
       { 'tr', ':ToggleTerm dir=./ direction=vertical<CR>' },
       { 'tf', ':ToggleTerm dir=./ direction=float<CR>' },

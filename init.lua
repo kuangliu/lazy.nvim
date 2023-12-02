@@ -97,7 +97,7 @@ require('lazy').setup({
       renderer = {
         icons = {
           webdev_colors = false,
-          git_placement = 'befere',
+          git_placement = 'before',
           padding = ' ',
           symlink_arrow = ' ➜ ',
           show = {

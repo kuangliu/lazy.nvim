@@ -1,5 +1,14 @@
 local M = {}
 
+function M.save_file()
+  buftype = vim.bo.buftype
+  if buftype == 'nofile' or buftype == 'terminal' then
+    vim.api.nvim_command('nohlsearch')
+    return
+  end
+  vim.api.nvim_command('w|nohlsearch')
+end
+
 function M.nvim_tree_close_node(node)
   local view = require('nvim-tree.view')
   local renderer = require('nvim-tree.renderer')

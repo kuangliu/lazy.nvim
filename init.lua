@@ -247,7 +247,7 @@ require('lazy').setup({
         '1',
         function()
           require('conform').format({ async = false, lsp_fallback = true })
-          vim.cmd('w')
+          M.save_file()
         end,
         mode = 'n',
       },

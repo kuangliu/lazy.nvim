@@ -11,7 +11,8 @@ local M = require('util')
 vim.g.mapleader = ' '
 
 -- ESC to clear search highlight & save
-map('n', '<ESC>', ':w|nohlsearch<CR>')
+-- map('n', '<ESC>', ':w|nohlsearch<CR>')
+map('n', '<ESC>', M.save_file)
 
 -- Save while existing insert mode
 map('i', '<ESC>', '<ESC>:w<CR>')

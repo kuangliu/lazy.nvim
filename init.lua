@@ -108,6 +108,7 @@ require('lazy').setup({
           },
           glyphs = {
             default = '',
+            -- default = '', -- for mac
             symlink = '',
             bookmark = '',
             folder = {
@@ -342,7 +343,6 @@ require('lazy').setup({
     'akinsho/toggleterm.nvim',
     lazy = false,
     opts = {
-      -- size can be a number or function which is passed the current terminal
       size = function(term)
         if term.direction == 'horizontal' then
           return 20
@@ -351,24 +351,18 @@ require('lazy').setup({
         end
       end,
       open_mapping = [[<c-\>]],
-      hide_numbers = true, -- hide the number column in toggleterm buffers
+      hide_numbers = true,
       shade_filetypes = {},
       shade_terminals = false,
-      shading_factor = 1, -- the degree by which to darken to terminal colour, default: 1 for dark backgrounds, 3 for light
+      shading_factor = 1,
       start_in_insert = true,
-      insert_mappings = true, -- whether or not the open mapping applies in insert mode
+      insert_mappings = true,
       persist_size = true,
       persist_mode = false,
-      -- direction = 'vertical' | 'horizontal' | 'window' | 'float',
-      close_on_exit = true, -- close the terminal window when the process exits
-      shell = vim.o.shell, -- change the default shell
-      -- This field is only relevant if direction is set to 'float'
+      close_on_exit = true,
+      shell = vim.o.shell,
       float_opts = {
-        -- The border key is *almost* the same as 'nvim_open_win'
-        -- see :h nvim_open_win for details on borders however
-        -- the 'curved' border is a custom border type
-        -- not natively supported but implemented in this plugin.
-        border = 'curved', -- 'single' | 'double' | 'shadow' | 'curved' | ... other options supported by win open
+        border = 'curved',
         width = math.floor(vim.api.nvim_win_get_width(0) * 0.9),
         height = math.floor(vim.api.nvim_win_get_height(0) * 0.9),
         winblend = 3,
@@ -610,6 +604,33 @@ require('lazy').setup({
         Operator = '󰆕',
         TypeParameter = '󰅲',
         -- Codeium = '',
+      }
+
+      local kind_icons_mac = {
+        Method = 'm',
+        Function = '',
+        Constructor = '',
+        Field = '',
+        Variable = '',
+        Class = '',
+        Interface = '',
+        Module = '',
+        Property = '',
+        Unit = '',
+        Value = '',
+        Enum = '',
+        Keyword = '',
+        Snippet = '',
+        Color = '',
+        File = '',
+        Reference = '',
+        Folder = '',
+        EnumMember = '',
+        Constant = '',
+        Struct = '',
+        Event = '',
+        Operator = '',
+        TypeParameter = '',
       }
 
       local cmp = require('cmp')

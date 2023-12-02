@@ -97,7 +97,7 @@ require('lazy').setup({
       renderer = {
         icons = {
           webdev_colors = false,
-          git_placement = 'before',
+          git_placement = 'befere',
           padding = ' ',
           symlink_arrow = ' ➜ ',
           show = {
@@ -160,10 +160,26 @@ require('lazy').setup({
   {
     'folke/flash.nvim',
     event = 'VeryLazy',
+    opts = {
+      search = { multi_window = false },
+      label = { uppercase = false },
+    },
     -- stylua: ignore
     keys = {
       { "s", mode = { "n", "x", "o" }, function() require("flash").jump() end, desc = "Flash" },
     },
+    config = function(_, opts)
+      require('flash').setup(opts)
+      local hls = {
+        FlashMatch = { fg = '#61afef' },
+        FlashCurrent = { fg = '#61afef' },
+        FlashLabel = { fg = '#e06c75', bold = true },
+      }
+      for hl_group, hl in pairs(hls) do
+        hl.default = true
+        vim.api.nvim_set_hl(0, hl_group, hl)
+      end
+    end,
   },
 
   --------------------

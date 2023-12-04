@@ -11,14 +11,10 @@ local M = require('util')
 vim.g.mapleader = ' '
 
 -- ESC to clear search highlight & save
--- map('n', '<ESC>', ':w|nohlsearch<CR>')
 map('n', '<ESC>', M.save_file)
 
 -- Save while existing insert mode
 map('i', '<ESC>', '<ESC>:w<CR>')
-
--- Map 2 to toggle float term
-map('n', '2', ':ToggleTerm dir=./ direction=float<CR>')
 
 -- Map q/Q to exit/quit
 map('n', 'q', ':exit<CR>')
@@ -53,8 +49,8 @@ map('n', '@b', ':!cmake -S . -B build -DCMAKE_EXPORT_COMPILE_COMMANDS=ON && cmak
 map('n', '@g', ':!./build/main<CR>')
 
 -- Begin & end of line
-map({ 'n', 'v' }, '<S-l>', '$')
 map({ 'n', 'v' }, '<S-h>', '^')
+map({ 'n', 'v' }, '<S-l>', '$')
 
 ----------------------
 -- Window settings

@@ -356,10 +356,9 @@ require('lazy').setup({
     },
     keys = {
       { '<ESC>', [[<C-\><C-n>]], mode = 't' },
-      { 'tb', ':ToggleTerm dir=./ direction=horizontal<CR>' },
+      { '2', ':ToggleTerm dir=./ direction=float<CR>' },
       { 'tr', ':ToggleTerm dir=./ direction=vertical<CR>' },
-      { 'tf', ':ToggleTerm dir=./ direction=float<CR>' },
-      { 'tt', ':ToggleTerm dir=./ direction=float<CR>' },
+      { 'tb', ':ToggleTerm dir=./ direction=horizontal<CR>' },
       { 'zg', M.lazygit_toggle },
     },
   },

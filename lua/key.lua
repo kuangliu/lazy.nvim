@@ -21,9 +21,6 @@ map('n', 'q', ':exit<CR>')
 map('n', 'Q', ':wqa!<CR>')
 
 -- Delete from line start to end of previous line
-map('n', '<Leader>dk', '^hvk$d<CR>')
-
--- Delete from cursor to end of previsou line
 map('n', 'dk', '^hvk$d')
 
 -- Move current line up and down

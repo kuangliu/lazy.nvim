@@ -1,7 +1,7 @@
 local M = {}
 
 function M.save_file()
-  buftype = vim.bo.buftype
+  local buftype = vim.bo.buftype
   if buftype == 'nofile' or buftype == 'terminal' then
     vim.cmd([[nohlsearch]])
     return

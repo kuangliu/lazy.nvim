@@ -52,13 +52,17 @@ map('n', '<Leader>p', 'viwp')
 map('n', '@b', ':!cmake -S . -B build -DCMAKE_EXPORT_COMPILE_COMMANDS=ON && cmake --build build<CR>')
 map('n', '@g', ':!./build/main<CR>')
 
+-- Begin & end of line
+map({ 'n', 'v' }, '<S-l>', '$')
+map({ 'n', 'v' }, '<S-h>', '^')
+
 ----------------------
 -- Window settings
 ----------------------
-map('n', '<S-l>', ':vertical resize -5<CR>')
-map('n', '<S-h>', ':vertical resize +5<CR>')
-map('n', '<S-k>', ':resize +5<CR>')
-map('n', '<S-j>', ':resize -5<CR>')
+-- map('n', '<S-l>', ':vertical resize -5<CR>')
+-- map('n', '<S-h>', ':vertical resize +5<CR>')
+-- map('n', '<S-k>', ':resize +5<CR>')
+-- map('n', '<S-j>', ':resize -5<CR>')
 
 ----------------------
 -- Terminal settings

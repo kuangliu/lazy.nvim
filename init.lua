@@ -156,17 +156,23 @@ require('lazy').setup({
   },
 
   --------------------
-  -- Flash Jump
+  -- Flash-jump
   --------------------
   {
-    'folke/flash.nvim',
+    'kuangliu/flash.nvim',
     event = 'VeryLazy',
     opts = {
       search = { multi_window = false },
       label = { uppercase = false },
       modes = {
         search = { enabled = false },
-        char = { enabled = false },
+        char = {
+          multi_line = false,
+          jump_labels = true,
+          search = { wrap = true },
+          highlight = { backdrop = true },
+          keys = { 'f' },
+        },
       },
     },
     config = function(_, opts)
@@ -175,6 +181,7 @@ require('lazy').setup({
         FlashMatch = { fg = '#61AFEF' },
         FlashCurrent = { fg = '#61AFEF' },
         FlashLabel = { fg = '#E06C75' },
+        FlashCursor = { reverse = true },
       }
       for hl_group, hl in pairs(hls) do
         hl.default = true
@@ -183,8 +190,7 @@ require('lazy').setup({
     end,
     -- stylua: ignore
     keys = {
-      { "s", mode = { "n", "x", "o" }, function() require("flash").jump() end },
-      { "f", mode = { "n", "x", "o" }, M.hopword },
+      { 's', mode = { 'n', 'x', 'o' }, M.hopword },
     },
   },
 

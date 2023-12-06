@@ -181,7 +181,7 @@ require('lazy').setup({
         FlashMatch = { fg = '#61AFEF' },
         FlashCurrent = { fg = '#61AFEF' },
         FlashLabel = { fg = '#E06C75' },
-        FlashCursor = { reverse = true },
+        FlashCursor = { fg = '#98C379' },
       }
       for hl_group, hl in pairs(hls) do
         hl.default = true

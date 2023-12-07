@@ -392,7 +392,6 @@ require('lazy').setup({
   --------------------
   {
     'hoob3rt/lualine.nvim',
-    -- dependencies = { 'kyazdani42/nvim-web-devicons' },
     opts = {
       options = {
         theme = 'onedark',
@@ -411,7 +410,6 @@ require('lazy').setup({
   --------------------
   {
     'kuangliu/bufferline.nvim',
-    -- dependencies = { 'kyazdani42/nvim-web-devicons' },
     opts = {
       options = {
         indicator = { icon = '' },

@@ -65,47 +65,27 @@ require('lazy').setup({
   -- Nvim-tree
   --------------------
   {
-    'kuangliu/nvim-tree.lua',
-    dependencies = { 'kyazdani42/nvim-web-devicons' },
+    'nvim-tree/nvim-tree.lua',
     opts = {
-      view = {
-        width = 30,
-        side = 'left',
-        mappings = {
-          custom_only = false,
-          list = {
-            { key = { 'l', '<CR>', 'o', 'e' }, action = 'edit' },
-            {
-              key = 'h',
-              action = 'my_close_node',
-              action_cb = M.nvim_tree_close_node,
-            },
-            { key = 'i', action = 'vsplit' },
-          },
-        },
-      },
-      filters = {
-        dotfiles = true,
-        custom = {},
-        exclude = {},
-      },
-      git = {
-        enable = true,
-        ignore = true,
-        timeout = 400,
-      },
+      on_attach = function(bufnr)
+        local api = require('nvim-tree.api')
+        local function opts(desc)
+          return { desc = 'nvim-tree: ' .. desc, buffer = bufnr, noremap = true, silent = true, nowait = true }
+        end
+        api.config.mappings.default_on_attach(bufnr)
+        vim.keymap.del('n', '<C-v>', { buffer = bufnr })
+        vim.keymap.del('n', '<BS>', { buffer = bufnr })
+        vim.keymap.del('n', '<Tab>', { buffer = bufnr })
+        vim.keymap.del('n', 'e', { buffer = bufnr })
+        vim.keymap.set('n', 'l', api.node.open.edit, opts('Open'))
+        vim.keymap.set('n', 'e', api.node.open.edit, opts('Open'))
+        vim.keymap.set('n', 'i', api.node.open.vertical, opts('Open: Vertical Split'))
+        vim.keymap.set('n', 'h', api.node.navigate.parent_close, opts('Close Directory'))
+      end,
+      filters = { dotfiles = true },
       renderer = {
+        indent_markers = { enable = true },
         icons = {
-          webdev_colors = false,
-          git_placement = 'before',
-          padding = ' ',
-          symlink_arrow = ' ➜ ',
-          show = {
-            file = true,
-            folder = true,
-            folder_arrow = true,
-            git = true,
-          },
           glyphs = {
             default = '',
             -- default = '', -- for mac
@@ -134,13 +114,14 @@ require('lazy').setup({
         },
       },
     },
-    config = true,
+    config = function(_, opts)
+      require('nvim-tree').setup(opts)
+    end,
     keys = {
-      { '<Leader>f', M.nvim_tree_find },
-      { '<S-r>', ':NvimTreeRefresh<CR>' },
+      { '<Leader>f', ':NvimTreeFindFileToggle<CR>' },
     },
     init = function()
-      vim.cmd([[autocmd BufEnter * lua require('nvim-tree').find_file(false)]])
+      vim.cmd([[autocmd BufEnter * lua require('nvim-tree.actions.tree.find-file').fn()]])
     end,
   },
 
@@ -400,7 +381,7 @@ require('lazy').setup({
       vim.api.nvim_create_autocmd({ 'SessionLoadPost' }, {
         group = config_group,
         callback = function()
-          require('nvim-tree').toggle(true, true)
+          require('nvim-tree.api').tree.toggle(false, true)
         end,
       })
     end,
@@ -411,7 +392,7 @@ require('lazy').setup({
   --------------------
   {
     'hoob3rt/lualine.nvim',
-    dependencies = { 'kyazdani42/nvim-web-devicons' },
+    -- dependencies = { 'kyazdani42/nvim-web-devicons' },
     opts = {
       options = {
         theme = 'onedark',
@@ -430,7 +411,7 @@ require('lazy').setup({
   --------------------
   {
     'kuangliu/bufferline.nvim',
-    dependencies = { 'kyazdani42/nvim-web-devicons' },
+    -- dependencies = { 'kyazdani42/nvim-web-devicons' },
     opts = {
       options = {
         indicator = { icon = '' },

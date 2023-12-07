@@ -9,45 +9,6 @@ function M.save_file()
   vim.cmd([[w|nohlsearch]])
 end
 
-function M.nvim_tree_close_node(node)
-  local view = require('nvim-tree.view')
-  local renderer = require('nvim-tree.renderer')
-  local core = require('nvim-tree.core')
-  local utils = require('nvim-tree.utils')
-
-  local fs_stat = node.fs_stat
-  local parent = node.parent
-  if fs_stat.type == 'directory' and node.open then
-    parent = node
-  end
-
-  if not parent or parent.cwd then
-    return view.set_cursor({ 1, 0 })
-  end
-
-  local _, line = utils.find_node(core.get_explorer().nodes, function(n)
-    return n.absolute_path == parent.absolute_path
-  end)
-
-  view.set_cursor({ line + 1, 0 })
-  parent.open = false
-  renderer.draw()
-end
-
-function M.nvim_tree_find()
-  local view = require('nvim-tree.view')
-  if view.is_visible() then
-    view.close()
-    return
-  end
-  local buf = vim.api.nvim_buf_get_name(0)
-  if string.len(buf) == 0 then
-    require('nvim-tree').toggle(false)
-  else
-    require('nvim-tree').find_file(true)
-  end
-end
-
 function M.lazygit_toggle()
   local Terminal = require('toggleterm.terminal').Terminal
   local lazygit = Terminal:new({

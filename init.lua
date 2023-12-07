@@ -84,7 +84,6 @@ require('lazy').setup({
       end,
       filters = { dotfiles = true },
       renderer = {
-        indent_markers = { enable = true },
         icons = {
           glyphs = {
             default = '',
@@ -381,7 +380,7 @@ require('lazy').setup({
       vim.api.nvim_create_autocmd({ 'SessionLoadPost' }, {
         group = config_group,
         callback = function()
-          require('nvim-tree.api').tree.toggle(false, true)
+          require('nvim-tree.api').tree.toggle(true, true)
         end,
       })
     end,

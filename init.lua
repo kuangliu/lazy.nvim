@@ -143,7 +143,7 @@ require('lazy').setup({
     event = 'VeryLazy',
     opts = {
       search = { multi_window = false },
-      label = { uppercase = false },
+      label = { after = false, before = { 0, 0 }, uppercase = false },
       modes = {
         search = { enabled = false },
         char = {

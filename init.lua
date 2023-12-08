@@ -694,8 +694,9 @@ require('lazy').setup({
   --------------------
   {
     'RRethy/vim-illuminate',
-    config = function()
-      require('illuminate').configure({})
+    opts = { filetypes_denylist = { 'NvimTree' } },
+    config = function(_, opts)
+      require('illuminate').configure(opts)
     end,
   },
 })

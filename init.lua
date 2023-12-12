@@ -168,9 +168,8 @@ require('lazy').setup({
         vim.api.nvim_set_hl(0, hl_group, hl)
       end
     end,
-    -- stylua: ignore
     keys = {
-      { 's', mode = { 'n', 'x', 'o' }, M.hopword },
+      { 's', M.hopword, mode = { 'n', 'x', 'o' } },
     },
   },
 
@@ -632,9 +631,7 @@ require('lazy').setup({
         },
         formatting = {
           format = function(entry, vim_item)
-            -- Kind icons
-            vim_item.kind = string.format('%s %s', kind_icons[vim_item.kind], vim_item.kind) -- This concatonates the icons with the name of the item kind
-            -- Source
+            vim_item.kind = string.format('%s %s', kind_icons[vim_item.kind], vim_item.kind)
             vim_item.menu = ({
               buffer = '[Buffer]',
               nvim_lsp = '[LSP]',

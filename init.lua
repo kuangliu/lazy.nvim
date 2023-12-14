@@ -253,7 +253,7 @@ require('lazy').setup({
       },
     },
     keys = {
-      { '<C-f>', ':Telescope find_files find_command=fd,--hidden,--no-ignore<CR>' },
+      { '<C-f>', ':Telescope find_files find_command=fd<CR>' },
       { '<C-g>', ':Telescope live_grep<CR>' },
     },
     config = function()

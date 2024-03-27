@@ -220,10 +220,14 @@ require('lazy').setup({
       confrom.formatters.autopep8 = {
         prepend_args = { '--max-line-length', '120' },
       }
+      confrom.formatters.clang_format = {
+        prepend_args = { '-style', 'Google' },
+      }
       confrom.setup({
         formatters_by_ft = {
           lua = { 'stylua' },
           python = { 'autopep8' },
+          cpp = { 'clang_format' },
         },
       })
     end,

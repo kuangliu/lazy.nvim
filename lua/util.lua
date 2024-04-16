@@ -17,7 +17,7 @@ function M.lazygit_toggle()
     hidden = false,
     float_opts = {
       border = 'curved',
-      width = math.floor(vim.api.nvim_win_get_width(0) * 0.9),
+      width = math.floor(vim.o.columns * 0.9),
       height = math.floor(vim.api.nvim_win_get_height(0) * 0.9),
     },
   })

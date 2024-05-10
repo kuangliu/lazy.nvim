@@ -18,7 +18,7 @@ map('i', '<ESC>', '<ESC>:w<CR>')
 
 -- Map q/Q to exit/quit
 map('n', 'q', ':exit<CR>')
-map('n', 'Q', ':wqa!<CR>')
+map('n', 'Q', ':qa!<CR>')
 
 -- Delete from line start to end of previous line
 map('n', 'dk', '^hvk$d')

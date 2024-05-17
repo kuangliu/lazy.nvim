@@ -679,6 +679,7 @@ require('lazy').setup({
       nvim_lsp['lua_ls'].setup({})
       nvim_lsp['pyright'].setup({})
       nvim_lsp['rust_analyzer'].setup({})
+      nvim_lsp['clangd'].setup({})
     end,
   },
 

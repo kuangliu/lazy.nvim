@@ -692,6 +692,19 @@ require('lazy').setup({
   },
 
   --------------------
+  -- outline.nvim
+  --------------------
+  {
+    'hedyhli/outline.nvim',
+    config = function()
+      require('outline').setup()
+    end,
+    keys = {
+      { '<Leader>o', ':Outline<CR>', mode = { 'n' } },
+    },
+  },
+
+  --------------------
   -- Harpoon2
   --------------------
   {

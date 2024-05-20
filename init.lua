@@ -208,7 +208,7 @@ require('lazy').setup({
   },
 
   --------------------
-  -- Conform reformat
+  -- Reformat
   --------------------
   {
     'stevearc/conform.nvim',
@@ -692,7 +692,7 @@ require('lazy').setup({
   },
 
   --------------------
-  -- outline.nvim
+  -- Outline
   --------------------
   {
     'hedyhli/outline.nvim',
@@ -724,7 +724,7 @@ require('lazy').setup({
   },
 
   --------------------
-  -- vim-illuminate
+  -- Cursor highlight
   --------------------
   {
     'RRethy/vim-illuminate',

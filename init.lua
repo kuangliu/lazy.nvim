@@ -671,15 +671,14 @@ require('lazy').setup({
       })
 
       vim.lsp.handlers['textDocument/publishDiagnostics'] = vim.lsp.with(vim.lsp.diagnostic.on_publish_diagnostics, {
-        signs = { severity_limit = 'Hint' },
-        virtual_text = { severity_limit = 'Warning' },
+        signs = { severity = { min = vim.diagnostic.severity.HINT } },
+        virtual_text = { severity = { min = vim.diagnostic.severity.WARN } },
       })
 
-      local nvim_lsp = require('lspconfig')
-      nvim_lsp['lua_ls'].setup({})
-      nvim_lsp['pyright'].setup({})
-      nvim_lsp['rust_analyzer'].setup({})
-      nvim_lsp['clangd'].setup({})
+      require('lspconfig').pyright.setup({})
+      require('lspconfig').lua_ls.setup({})
+      require('lspconfig').rust_analyzer.setup({})
+      require('lspconfig').clangd.setup({})
     end,
   },
 

@@ -54,10 +54,17 @@ require('lazy').setup({
   -- Onedark
   --------------------
   {
-    'kuangliu/onedark.vim',
+    'navarasu/onedark.nvim',
     config = function()
-      vim.cmd([[colorscheme onedark]])
-      vim.cmd([[set background=dark]])
+      require('onedark').setup({
+        highlights = {
+          ['@punctuation.bracket'] = { fg = '#abb2bf' },
+        },
+      })
+      require('onedark').load()
+      vim.api.nvim_set_hl(0, 'NvimTreeNormal', {})
+      vim.api.nvim_set_hl(0, 'NvimTreeEndOfBuffer', {})
+      vim.api.nvim_set_hl(0, 'NvimTreeRootFolder', { fg = '#98c379' })
     end,
   },
 
@@ -560,7 +567,7 @@ require('lazy').setup({
         Event = '',
         Operator = '󰆕',
         TypeParameter = '󰅲',
-        -- Codeium = '',
+        Codeium = '',
       }
 
       local kind_icons_mac = {
@@ -588,6 +595,7 @@ require('lazy').setup({
         Event = '',
         Operator = '',
         TypeParameter = '',
+        Codeium = '',
       }
 
       local cmp = require('cmp')
@@ -601,7 +609,7 @@ require('lazy').setup({
         },
         sources = {
           { name = 'luasnip' },
-          -- { name = 'codeium' },
+          { name = 'codeium' },
           { name = 'nvim_lsp' },
           { name = 'buffer' },
           { name = 'path' },
@@ -642,7 +650,7 @@ require('lazy').setup({
               nvim_lsp = '[LSP]',
               luasnip = '[LuaSnip]',
               nvim_lua = '[Lua]',
-              -- codeium = '[Codeium]',
+              codeium = '[Codeium]',
               latex_symbols = '[LaTeX]',
             })[entry.source.name]
             return vim_item
@@ -720,6 +728,22 @@ require('lazy').setup({
       vim.keymap.set('n', '<C-e>', function()
         harpoon.ui:toggle_quick_menu(harpoon:list())
       end)
+    end,
+  },
+
+  --------------------
+  -- Codeium
+  --------------------
+  {
+    'Exafunction/codeium.nvim',
+    dependencies = {
+      'nvim-lua/plenary.nvim',
+      'hrsh7th/nvim-cmp',
+    },
+    config = function()
+      require('codeium').setup({
+        enable_chat = true,
+      })
     end,
   },
 

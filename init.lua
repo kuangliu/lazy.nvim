@@ -653,14 +653,7 @@ require('lazy').setup({
         formatting = {
           format = function(entry, vim_item)
             vim_item.kind = string.format('%s %s', kind_icons[vim_item.kind], vim_item.kind)
-            vim_item.menu = ({
-              buffer = '[Buffer]',
-              nvim_lsp = '[LSP]',
-              luasnip = '[LuaSnip]',
-              nvim_lua = '[Lua]',
-              codeium = '[Codeium]',
-              latex_symbols = '[LaTeX]',
-            })[entry.source.name]
+            vim_item.menu = nil
             return vim_item
           end,
         },

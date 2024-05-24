@@ -56,15 +56,23 @@ require('lazy').setup({
   {
     'navarasu/onedark.nvim',
     config = function()
+      local c = require('onedark.palette').dark
       require('onedark').setup({
         highlights = {
-          ['@punctuation.bracket'] = { fg = '#abb2bf' },
+          ['@constructor'] = { fg = c.cyan },
+          ['@variable.builtin'] = { fg = c.yellow },
+          ['@variable.parameter'] = { fg = c.fg },
+          ['@lsp.type.parameter'] = { fg = c.fg },
+          ['@punctuation.bracket'] = { fg = c.fg },
+          ['@punctuation.special'] = { fg = c.blue },
+          ['@punctuation.delimiter'] = { fg = c.fg },
+          ['NvimTreeNormal'] = { fg = c.fg, bg = c.bg0 },
+          ['NvimTreeEndOfBuffer'] = { fg = c.bg0, bg = c.bg0 },
+          ['NvimTreeRootFolder'] = { fg = c.green },
+          ['CmpItemKindSnippet'] = { fg = c.orange },
         },
       })
       require('onedark').load()
-      vim.api.nvim_set_hl(0, 'NvimTreeNormal', {})
-      vim.api.nvim_set_hl(0, 'NvimTreeEndOfBuffer', {})
-      vim.api.nvim_set_hl(0, 'NvimTreeRootFolder', { fg = '#98c379' })
     end,
   },
 

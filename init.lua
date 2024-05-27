@@ -758,4 +758,26 @@ require('lazy').setup({
       require('illuminate').configure(opts)
     end,
   },
+
+  --------------------
+  -- Macro
+  --------------------
+  {
+    'chrisgrieser/nvim-recorder',
+    lazy = false,
+    config = function()
+      require('recorder').setup({
+        mapping = {
+          startStopRecording = 'm',
+          playMacro = 'M',
+        },
+        clear = true,
+      })
+      require('recorder').recordingStatus()
+      require('recorder').displaySlots()
+    end,
+    keys = {
+      { 'M', ':norm M<CR>', mode = { 'v' } }, -- apply macro to selected lines
+    },
+  },
 })

@@ -616,8 +616,8 @@ require('lazy').setup({
           end,
         },
         sources = {
-          { name = 'luasnip' },
           { name = 'codeium' },
+          { name = 'luasnip' },
           { name = 'nvim_lsp' },
           { name = 'buffer' },
           { name = 'path' },
@@ -652,10 +652,27 @@ require('lazy').setup({
         },
         formatting = {
           format = function(entry, vim_item)
-            vim_item.kind = string.format('%s %s', kind_icons[vim_item.kind], vim_item.kind)
+            vim_item.kind = string.format('%s [%s]', kind_icons[vim_item.kind], vim_item.kind)
             vim_item.menu = nil
             return vim_item
           end,
+        },
+
+        window = {
+          completion = {
+            border = { '╭', '─', '╮', '│', '╯', '─', '╰', '│' },
+            scrollbar = '║',
+            winhighlight = 'Normal:CmpMenu,FloatBorder:VertSplit,CursorLine:PmenuSel,Search:None',
+            autocomplete = {
+              require('cmp.types').cmp.TriggerEvent.InsertEnter,
+              require('cmp.types').cmp.TriggerEvent.TextChanged,
+            },
+          },
+          documentation = {
+            border = { '╭', '─', '╮', '│', '╯', '─', '╰', '│' },
+            winhighlight = 'NormalFloat:CmpMenu,FloatBorder:VertSplit',
+            scrollbar = '║',
+          },
         },
       })
     end,

@@ -70,6 +70,8 @@ require('lazy').setup({
           ['NvimTreeEndOfBuffer'] = { fg = c.bg0, bg = c.bg0 },
           ['NvimTreeRootFolder'] = { fg = c.green },
           ['CmpItemKindSnippet'] = { fg = c.orange },
+          ['NormalFloat'] = { fg = c.fg, bg = c.bg0 },
+          ['FloatBorder'] = { fg = c.bg1, bg = c.bg0 },
         },
       })
       require('onedark').load()
@@ -681,6 +683,10 @@ require('lazy').setup({
         virtual_text = { severity = { min = vim.diagnostic.severity.WARN } },
       })
 
+      vim.lsp.handlers['textDocument/hover'] = vim.lsp.with(vim.lsp.handlers.hover, {
+        border = 'rounded',
+      })
+
       require('lspconfig').pyright.setup({})
       require('lspconfig').lua_ls.setup({})
       require('lspconfig').rust_analyzer.setup({})
@@ -693,7 +699,7 @@ require('lazy').setup({
   --------------------
   {
     'ray-x/lsp_signature.nvim',
-    opts = { handler_opts = { border = 'none' } },
+    opts = { handler_opts = { border = 'rounded' } },
     config = true,
   },
 

@@ -74,3 +74,4 @@ map('n', '[b', ':bp<CR>')
 map('n', '<Leader>bw', ':<C-u>bp <BAR> bd #<CR>') -- quit current buffer
 map('n', '<Leader>bo', M.buf_only)
 map('n', '<Leader>bb', M.move_buf_vsp)
+map('n', 'B', ':BufferLinePick<CR>')

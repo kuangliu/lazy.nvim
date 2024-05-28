@@ -442,6 +442,14 @@ require('lazy').setup({
         tab_size = 15,
       },
       highlights = {
+        pick = {
+          bg = '#282C34',
+          italic = false,
+        },
+        pick_selected = {
+          bg = '#778899',
+          italic = false,
+        },
         fill = {
           bg = '#282C34',
         },

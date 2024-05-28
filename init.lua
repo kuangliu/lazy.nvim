@@ -665,19 +665,8 @@ require('lazy').setup({
   --------------------
   {
     'neovim/nvim-lspconfig',
+    lazy = false,
     config = function()
-      vim.api.nvim_create_autocmd('LspAttach', {
-        group = vim.api.nvim_create_augroup('UserLspConfig', {}),
-        callback = function(ev)
-          vim.bo[ev.buf].omnifunc = 'v:lua.vim.lsp.omnifunc'
-          local opts = { buffer = ev.buf }
-          vim.keymap.set('n', 'K', vim.lsp.buf.hover, opts)
-          vim.keymap.set('n', 'gd', vim.lsp.buf.definition, opts)
-          vim.keymap.set('n', 'gi', vim.lsp.buf.implementation, opts)
-          vim.keymap.set('n', '<Leader>r', vim.lsp.buf.rename, opts)
-        end,
-      })
-
       vim.lsp.handlers['textDocument/publishDiagnostics'] = vim.lsp.with(vim.lsp.diagnostic.on_publish_diagnostics, {
         signs = { severity = { min = vim.diagnostic.severity.HINT } },
         virtual_text = { severity = { min = vim.diagnostic.severity.WARN } },
@@ -687,11 +676,14 @@ require('lazy').setup({
         border = 'rounded',
       })
 
-      require('lspconfig').pyright.setup({})
-      require('lspconfig').lua_ls.setup({})
-      require('lspconfig').rust_analyzer.setup({})
       require('lspconfig').clangd.setup({})
+      require('lspconfig').lua_ls.setup({})
+      require('lspconfig').pyright.setup({})
+      require('lspconfig').rust_analyzer.setup({})
     end,
+    keys = {
+      { '<Leader>r', vim.lsp.buf.rename, mode = { 'n' } },
+    },
   },
 
   --------------------

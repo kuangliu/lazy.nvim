@@ -129,6 +129,7 @@ require('lazy').setup({
           },
         },
       },
+      actions = { change_dir = { restrict_above_cwd = true } },
     },
     config = function(_, opts)
       require('nvim-tree').setup(opts)

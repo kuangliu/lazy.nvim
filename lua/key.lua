@@ -13,6 +13,9 @@ vim.g.mapleader = ' '
 -- ESC to clear search highlight & save
 map('n', '<ESC>', M.save_file)
 
+-- Highlight search, but not move cursor
+map('n', '*', '*N')
+
 -- Save while existing insert mode
 map('i', '<ESC>', '<ESC>:w<CR>')
 
@@ -69,8 +72,8 @@ map('n', '<Leader>l', ':wincmd l<CR>')
 -- Tab settings
 ----------------------
 map('n', '<TAB>', ':bn<CR>')
-map('n', ']b', ':bn<CR>')
-map('n', '[b', ':bp<CR>')
+map('n', '<Left>', ':bp<CR>')
+map('n', '<Right>', ':bn<CR>')
 map('n', '<Leader>bw', ':<C-u>bp <BAR> bd #<CR>') -- quit current buffer
 map('n', '<Leader>bo', M.buf_only)
 map('n', '<Leader>bb', M.move_buf_vsp)

@@ -71,6 +71,7 @@ require('lazy').setup({
           ['CmpItemKindSnippet'] = { fg = c.orange },
           ['NormalFloat'] = { fg = c.fg, bg = c.bg0 },
           ['FloatBorder'] = { fg = c.bg1, bg = c.bg0 },
+          ['MatchParen'] = { bg = c.light_grey },
         },
       })
       require('onedark').load()

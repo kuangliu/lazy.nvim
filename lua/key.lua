@@ -40,9 +40,12 @@ map('n', 'cc', 'ciw')
 -- Copy to clipboard
 map('v', '<Leader>y', '"+y')
 
+-- Paste multiple times
+map('v', 'p', '"0p')
+
 -- Copy & replace word
 map('n', '<Leader>y', 'yiw')
-map('n', '<Leader>p', 'viwp')
+map('n', '<Leader>p', 'viw"0p')
 
 -- CMake
 map('n', '@b', ':!cmake -S . -B build -DCMAKE_EXPORT_COMPILE_COMMANDS=ON && cmake --build build<CR>')

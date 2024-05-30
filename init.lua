@@ -68,7 +68,6 @@ require('lazy').setup({
           ['@punctuation.delimiter'] = { fg = c.fg },
           ['NvimTreeNormal'] = { fg = c.fg, bg = c.bg0 },
           ['NvimTreeEndOfBuffer'] = { fg = c.bg0, bg = c.bg0 },
-          ['NvimTreeRootFolder'] = { fg = c.green },
           ['CmpItemKindSnippet'] = { fg = c.orange },
           ['NormalFloat'] = { fg = c.fg, bg = c.bg0 },
           ['FloatBorder'] = { fg = c.bg1, bg = c.bg0 },
@@ -101,6 +100,7 @@ require('lazy').setup({
       end,
       filters = { dotfiles = true },
       renderer = {
+        root_folder_label = false,
         icons = {
           glyphs = {
             default = '',

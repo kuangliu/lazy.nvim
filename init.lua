@@ -678,7 +678,7 @@ require('lazy').setup({
     lazy = false,
     config = function()
       vim.lsp.handlers['textDocument/publishDiagnostics'] = vim.lsp.with(vim.lsp.diagnostic.on_publish_diagnostics, {
-        signs = { severity = { min = vim.diagnostic.severity.HINT } },
+        signs = { severity = { min = vim.diagnostic.severity.ERROR } },
         virtual_text = { severity = { min = vim.diagnostic.severity.WARN } },
       })
 
@@ -784,5 +784,23 @@ require('lazy').setup({
     keys = {
       { 'M', ':norm M<CR>', mode = { 'v' } }, -- apply macro to selected lines
     },
+  },
+
+  --------------------
+  -- Gitsigns
+  --------------------
+  {
+    'lewis6991/gitsigns.nvim',
+    config = function()
+      require('gitsigns').setup({
+        signs = {
+          add = { text = '│' },
+          change = { text = '│' },
+          delete = { text = '─' },
+          topdelete = { text = '│' },
+          changedelete = { text = '│' },
+        },
+      })
+    end,
   },
 })

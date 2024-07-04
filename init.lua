@@ -363,11 +363,11 @@ require('lazy').setup({
       },
     },
     keys = {
-      { '<ESC>', [[<C-\><C-n>]], mode = 't' },
-      { '2', ':ToggleTerm dir=./ direction=float<CR>' },
-      { 'tr', ':ToggleTerm dir=./ direction=vertical<CR>' },
-      { 'tb', ':ToggleTerm dir=./ direction=horizontal<CR>' },
-      { 'zg', M.lazygit_toggle },
+      { '<ESC>', [[<C-\><C-n>]],                               mode = 't' },
+      { '2',     ':ToggleTerm dir=./ direction=float<CR>' },
+      { 'tr',    ':ToggleTerm dir=./ direction=vertical<CR>' },
+      { 'tb',    ':ToggleTerm dir=./ direction=horizontal<CR>' },
+      { 'zg',    M.lazygit_toggle },
     },
   },
 
@@ -628,7 +628,7 @@ require('lazy').setup({
               behavior = cmp.ConfirmBehavior.Insert,
               select = true,
             }),
-            { 'i', 'c' }
+            { 'i' }
           ),
         },
         experimental = {

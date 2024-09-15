@@ -44,6 +44,8 @@ for k, v in pairs(default_options) do
   vim.opt[k] = v
 end
 
+vim.cmd([[set fillchars=eob:\ ]])
+
 -------------------------------
 -- Plugins
 -------------------------------
@@ -66,13 +68,11 @@ require('lazy').setup({
           ['@punctuation.bracket'] = { fg = c.fg },
           ['@punctuation.special'] = { fg = c.blue },
           ['@punctuation.delimiter'] = { fg = c.fg },
-          ['NvimTreeNormal'] = { fg = c.fg, bg = c.bg0 },
-          ['NvimTreeEndOfBuffer'] = { fg = c.bg0, bg = c.bg0 },
           ['CmpItemKindSnippet'] = { fg = c.orange },
-          ['NormalFloat'] = { fg = c.fg, bg = c.bg0 },
-          ['FloatBorder'] = { fg = c.bg1, bg = c.bg0 },
           ['MatchParen'] = { bg = c.light_grey },
         },
+        transparent = true,
+        lualine = { transparent = true },
       })
       require('onedark').load()
     end,
@@ -355,19 +355,14 @@ require('lazy').setup({
         border = 'curved',
         width = math.floor(vim.api.nvim_win_get_width(0) * 0.9),
         height = math.floor(vim.api.nvim_win_get_height(0) * 0.9),
-        winblend = 3,
-        highlights = {
-          border = 'Normal',
-          background = 'Normal',
-        },
       },
     },
     keys = {
-      { '<ESC>', [[<C-\><C-n>]],                               mode = 't' },
-      { '2',     ':ToggleTerm dir=./ direction=float<CR>' },
-      { 'tr',    ':ToggleTerm dir=./ direction=vertical<CR>' },
-      { 'tb',    ':ToggleTerm dir=./ direction=horizontal<CR>' },
-      { 'zg',    M.lazygit_toggle },
+      { '<ESC>', [[<C-\><C-n>]], mode = 't' },
+      { '2', ':ToggleTerm dir=./ direction=float<CR>' },
+      { 'tr', ':ToggleTerm dir=./ direction=vertical<CR>' },
+      { 'tb', ':ToggleTerm dir=./ direction=horizontal<CR>' },
+      { 'zg', M.lazygit_toggle },
     },
   },
 
@@ -404,17 +399,29 @@ require('lazy').setup({
   --------------------
   {
     'hoob3rt/lualine.nvim',
-    opts = {
-      options = {
-        theme = 'onedark',
-        section_separators = { left = '', right = '' },
-        component_separators = { left = '', right = '' },
-        icons_enabled = false,
-        globalstatus = true,
-      },
-      extensions = { 'nvim-tree', 'toggleterm' },
-      sections = { lualine_c = { { 'filename', path = 2 } } },
-    },
+    config = function()
+      local c = require('onedark.colors')
+      require('lualine').setup({
+        options = {
+          theme = 'onedark',
+          section_separators = { left = '', right = '' },
+          component_separators = { left = '', right = '' },
+          icons_enabled = false,
+          globalstatus = true,
+          transparent = true,
+        },
+        extensions = { 'nvim-tree', 'toggleterm' },
+        sections = {
+          lualine_b = {
+            { 'branch', color = { fg = c.fg, bg = c.none } },
+            { 'diff', color = { fg = c.fg, bg = c.none } },
+            { 'diagnostics', color = { fg = c.fg, bg = c.none } },
+          },
+          lualine_c = { { 'filename', path = 2 } },
+          lualine_y = { { 'progress', color = { fg = c.fg, bg = c.none } } },
+        },
+      })
+    end,
   },
 
   --------------------
@@ -424,7 +431,7 @@ require('lazy').setup({
     'kuangliu/bufferline.nvim',
     opts = {
       options = {
-        indicator = { icon = '' },
+        indicator = { icon = 'ᐅ' },
         separator_style = { '', '' },
         modified_icon = '•',
         show_buffer_icons = false,
@@ -433,56 +440,6 @@ require('lazy').setup({
         enforce_regular_tabs = false,
         max_name_length = 300,
         tab_size = 15,
-      },
-      highlights = {
-        pick = {
-          bg = '#282C34',
-          italic = false,
-        },
-        pick_selected = {
-          bg = '#778899',
-          italic = false,
-        },
-        fill = {
-          bg = '#282C34',
-        },
-        background = {
-          fg = '#778899',
-          bg = '#282C34',
-          bold = true,
-        },
-        tab_close = {
-          bg = '#282C34',
-        },
-        separator = {
-          fg = '#282C34',
-          bg = '#282C34',
-        },
-        buffer_selected = {
-          fg = '#282C34',
-          bg = '#778899',
-          bold = true,
-        },
-        modified_selected = {
-          fg = '#282C34',
-          bg = '#778899',
-          bold = true,
-        },
-        duplicate_selected = {
-          fg = '#282C34',
-          bg = '#778899',
-          italic = true,
-        },
-        duplicate_visible = {
-          bg = '#282C34',
-          fg = '#778899',
-          italic = true,
-        },
-        duplicate = {
-          bg = '#282C34',
-          fg = '#778899',
-          italic = true,
-        },
       },
     },
   },

@@ -358,11 +358,11 @@ require('lazy').setup({
       },
     },
     keys = {
-      { '<ESC>', [[<C-\><C-n>]], mode = 't' },
-      { '2', ':ToggleTerm dir=./ direction=float<CR>' },
-      { 'tr', ':ToggleTerm dir=./ direction=vertical<CR>' },
-      { 'tb', ':ToggleTerm dir=./ direction=horizontal<CR>' },
-      { 'zg', M.lazygit_toggle },
+      { '<ESC>', [[<C-\><C-n>]],                               mode = 't' },
+      { '2',     ':ToggleTerm dir=./ direction=float<CR>' },
+      { 'tr',    ':ToggleTerm dir=./ direction=vertical<CR>' },
+      { 'tb',    ':ToggleTerm dir=./ direction=horizontal<CR>' },
+      { 'zg',    M.lazygit_toggle },
     },
   },
 
@@ -406,19 +406,35 @@ require('lazy').setup({
           theme = 'onedark',
           section_separators = { left = '', right = '' },
           component_separators = { left = '', right = '' },
-          icons_enabled = false,
+          icons_enabled = true,
           globalstatus = true,
           transparent = true,
         },
         extensions = { 'nvim-tree', 'toggleterm' },
         sections = {
           lualine_b = {
-            { 'branch', color = { fg = c.fg, bg = c.none } },
+            { 'branch', color = { fg = c.orange, bg = c.none, gui = 'bold' }, icon = '' },
             { 'diff', color = { fg = c.fg, bg = c.none } },
-            { 'diagnostics', color = { fg = c.fg, bg = c.none } },
           },
           lualine_c = { { 'filename', path = 2 } },
+          lualine_x = {
+            { 'searchcount', color = { fg = c.fg, bg = c.none } },
+            {
+              'diagnostics',
+              color = { fg = c.fg, bg = c.none },
+              symbols = { error = ' ', warn = ' ', info = ' ', hint = '󰌶 ' },
+            },
+          },
           lualine_y = { { 'progress', color = { fg = c.fg, bg = c.none } } },
+          lualine_z = {
+            {
+              function()
+                return '▐'
+              end,
+              color = { fg = c.green, bg = c.none }, -- Sets highlighting of component
+              padding = { left = 0, right = 0 },     -- We don't need space before this
+            },
+          },
         },
       })
     end,

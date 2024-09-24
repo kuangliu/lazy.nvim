@@ -163,6 +163,7 @@ require('lazy').setup({
     opts = {
       search = { multi_window = false },
       label = { after = false, before = { 0, 0 }, uppercase = false },
+      prompt = { prefix = { { '  ', 'FlashPromptIcon' } } },
       modes = {
         search = { enabled = false },
         char = {
@@ -358,11 +359,11 @@ require('lazy').setup({
       },
     },
     keys = {
-      { '<ESC>', [[<C-\><C-n>]],                               mode = 't' },
-      { '2',     ':ToggleTerm dir=./ direction=float<CR>' },
-      { 'tr',    ':ToggleTerm dir=./ direction=vertical<CR>' },
-      { 'tb',    ':ToggleTerm dir=./ direction=horizontal<CR>' },
-      { 'zg',    M.lazygit_toggle },
+      { '<ESC>', [[<C-\><C-n>]], mode = 't' },
+      { '2', ':ToggleTerm dir=./ direction=float<CR>' },
+      { 'tr', ':ToggleTerm dir=./ direction=vertical<CR>' },
+      { 'tb', ':ToggleTerm dir=./ direction=horizontal<CR>' },
+      { 'zg', M.lazygit_toggle },
     },
   },
 
@@ -432,7 +433,7 @@ require('lazy').setup({
                 return '▐'
               end,
               color = { fg = c.green, bg = c.none }, -- Sets highlighting of component
-              padding = { left = 0, right = 0 },     -- We don't need space before this
+              padding = { left = 0, right = 0 }, -- We don't need space before this
             },
           },
         },

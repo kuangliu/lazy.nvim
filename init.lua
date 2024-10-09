@@ -75,6 +75,8 @@ require('lazy').setup({
         lualine = { transparent = true },
       })
       require('onedark').load()
+      vim.cmd([[hi! link FloatBorder VertSplit]])
+      vim.cmd([[hi! link NormalFloat CmpMenu]])
     end,
   },
 

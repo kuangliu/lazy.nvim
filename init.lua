@@ -413,12 +413,12 @@ require('lazy').setup({
           globalstatus = true,
           transparent = true,
         },
-        extensions = { 'nvim-tree', 'toggleterm' },
+        extensions = { 'toggleterm' },
         sections = {
           lualine_b = {
             { 'branch', color = { fg = c.orange, bg = c.none, gui = 'bold' }, icon = '' },
           },
-          lualine_c = { { 'filename', path = 2 } },
+          lualine_c = { { M.get_absolute_path } },
           lualine_x = {
             {
               'diff',

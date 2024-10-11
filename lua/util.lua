@@ -9,6 +9,17 @@ function M.save_file()
   vim.cmd([[w|nohlsearch]])
 end
 
+function M.get_absolute_path()
+  if vim.bo.buftype == 'nofile' then
+    -- Nvimtree return file path under cursor.
+    local api = require("nvim-tree.api")
+    local node = api.tree.get_node_under_cursor()
+    return node.absolute_path
+  end
+  -- Return file path of current buffer.
+  return vim.fn.expand('%:p')
+end
+
 function M.lazygit_toggle()
   local Terminal = require('toggleterm.terminal').Terminal
   local lazygit = Terminal:new({

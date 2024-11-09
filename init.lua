@@ -679,6 +679,8 @@ require('lazy').setup({
     end,
     keys = {
       { '<Leader>r', vim.lsp.buf.rename, mode = { 'n' } },
+      { 'gd', ":lua require('telescope.builtin').lsp_definitions()<CR>", mode = { 'n' } },
+      { 'gr', ":lua require('telescope.builtin').lsp_references()<CR>", mode = { 'n' } },
     },
   },
 

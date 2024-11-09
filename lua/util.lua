@@ -12,7 +12,7 @@ end
 function M.get_absolute_path()
   if vim.bo.buftype == 'nofile' then
     -- Nvimtree return file path under cursor.
-    local api = require("nvim-tree.api")
+    local api = require('nvim-tree.api')
     local node = api.tree.get_node_under_cursor()
     return node.absolute_path
   end

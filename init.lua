@@ -44,7 +44,29 @@ for k, v in pairs(default_options) do
   vim.opt[k] = v
 end
 
+-- Hide end-of-line symbol
 vim.cmd([[set fillchars=eob:\ ]])
+
+-------------------------------
+-- Yank settings
+-------------------------------
+-- Blink & keep cursor position when yanking
+local cursor_pre_yank
+vim.keymap.set({ 'n', 'x' }, 'y', function()
+  cursor_pre_yank = vim.api.nvim_win_get_cursor(0)
+  return 'y'
+end, { expr = true })
+
+vim.api.nvim_create_autocmd('TextYankPost', {
+  desc = 'Highlight when yanking (copying) text & sticky yank',
+  group = vim.api.nvim_create_augroup('highlight-yank', { clear = true }),
+  callback = function()
+    vim.highlight.on_yank()
+    if vim.v.event.operator == 'y' and cursor_pre_yank then
+      vim.api.nvim_win_set_cursor(0, cursor_pre_yank)
+    end
+  end,
+})
 
 -------------------------------
 -- Plugins
@@ -678,9 +700,9 @@ require('lazy').setup({
       require('lspconfig').rust_analyzer.setup({})
     end,
     keys = {
-      { '<Leader>r', vim.lsp.buf.rename, mode = { 'n' } },
-      { 'gd', ":lua require('telescope.builtin').lsp_definitions()<CR>", mode = { 'n' } },
-      { 'gr', ":lua require('telescope.builtin').lsp_references()<CR>", mode = { 'n' } },
+      { '<Leader>r', vim.lsp.buf.rename,                                        mode = { 'n' } },
+      { 'gd',        ":lua require('telescope.builtin').lsp_definitions()<CR>", mode = { 'n' } },
+      { 'gr',        ":lua require('telescope.builtin').lsp_references()<CR>",  mode = { 'n' } },
     },
   },
 

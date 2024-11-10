@@ -2,11 +2,11 @@ local M = {}
 
 function M.save_file()
   local buftype = vim.bo.buftype
-  if buftype == 'nofile' or buftype == 'terminal' then
+  if buftype == '' then
+    vim.cmd([[w|nohlsearch]])
+  else
     vim.cmd([[nohlsearch]])
-    return
   end
-  vim.cmd([[w|nohlsearch]])
 end
 
 function M.get_absolute_path()

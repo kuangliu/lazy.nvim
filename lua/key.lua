@@ -10,14 +10,14 @@ local M = require('util')
 -- Map the leader key
 vim.g.mapleader = ' '
 
--- ESC to clear search highlight & save
-map('n', '<ESC>', M.save_file)
-
 -- Highlight search, but not move cursor
 map('n', '*', '*N')
 
+-- ESC to clear search highlight & save
+map('n', '<ESC>', M.save_file)
+
 -- Save while existing insert mode
-map('i', '<ESC>', '<ESC>:w<CR>')
+map('i', '<ESC>', "<ESC>:lua require('util').save_file()<CR>")
 
 -- Map q/Q to exit/quit
 map('n', 'q', ':exit<CR>')

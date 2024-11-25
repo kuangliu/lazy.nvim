@@ -797,6 +797,17 @@ require('lazy').setup({
   },
 
   --------------------
+  -- Search & replace
+  --------------------
+  {
+    'chrisgrieser/nvim-rip-substitute',
+    cmd = 'RipSubstitute',
+    keys = {
+      { '<Leader>ss', function() require('rip-substitute').sub() end, mode = { 'n', 'x' } },
+    }
+  },
+
+  --------------------
   -- Gitsigns
   --------------------
   {

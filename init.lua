@@ -295,6 +295,7 @@ require('lazy').setup({
     dependencies = {
       'nvim-lua/plenary.nvim',
       'nvim-telescope/telescope-ui-select.nvim',
+      'nvim-telescope/telescope-live-grep-args.nvim',
       {
         'nvim-telescope/telescope-fzf-native.nvim',
         build = 'make',
@@ -302,11 +303,21 @@ require('lazy').setup({
     },
     keys = {
       { '<C-f>', ':Telescope find_files find_command=fd<CR>' },
-      { '<C-g>', ':Telescope live_grep<CR>' },
+      { '<C-g>', ':Telescope live_grep_args<CR>' },
     },
     config = function()
+      local actions = require('telescope-live-grep-args.actions')
       require('telescope').setup({
         extensions = {
+          live_grep_args = {
+            auto_quoting = true,
+            mappings = {
+              i = {
+                ['<Tab>'] = actions.quote_prompt({ postfix = ' -g *.' }),
+                ['<C-i>'] = actions.quote_prompt({ postfix = ' --iglob ' }),
+              },
+            },
+          },
           fzf = {
             fuzzy = true,
             override_generic_sorter = true,
@@ -316,6 +327,7 @@ require('lazy').setup({
         },
       })
       require('telescope').load_extension('fzf')
+      require('telescope').load_extension('live_grep_args')
     end,
   },
 

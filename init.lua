@@ -99,6 +99,11 @@ require('lazy').setup({
       require('onedark').load()
       vim.cmd([[hi! link FloatBorder VertSplit]])
       vim.cmd([[hi! link NormalFloat CmpMenu]])
+      vim.cmd([[hi! link BlinkCmpMenu Normal]])
+      vim.cmd([[hi! link BlinkCmpMenuBorder VertSplit]])
+      vim.cmd([[hi! link BlinkCmpDocBorder VertSplit]])
+      vim.cmd([[hi! link BlinkCmpDocSeparator VertSplit]])
+      vim.cmd([[hi! link BlinkCmpSignatureHelpBorder VertSplit]])
     end,
   },
 
@@ -544,150 +549,42 @@ require('lazy').setup({
   },
 
   --------------------
-  -- Nvim-cmp
+  -- Blink.cmp
   --------------------
   {
-    'hrsh7th/nvim-cmp',
-    dependencies = {
-      'hrsh7th/cmp-buffer',
-      'hrsh7th/cmp-nvim-lsp',
-      'hrsh7th/cmp-path',
-      'hrsh7th/cmp-cmdline',
-      'L3MON4D3/LuaSnip',
-      'saadparwaiz1/cmp_luasnip',
-      'kuangliu/friendly-snippets',
+    'saghen/blink.cmp',
+    dependencies = 'rafamadriz/friendly-snippets',
+    version = '*',
+    opts = {
+      signature = { enabled = true, window = { border = 'single' } },
+      completion = {
+        list = { selection = 'auto_insert' },
+        menu = {
+          border = 'single',
+          auto_show = function(ctx)
+            return vim.bo.buftype ~= "prompt"
+          end,
+        },
+        documentation = { auto_show = true, auto_show_delay_ms = 0, window = { border = 'single' } },
+        ghost_text = { enabled = true },
+      },
+      keymap = {
+        ['<C-u>'] = { 'select_prev', 'fallback' },
+        ['<C-d>'] = { 'select_next', 'fallback' },
+        ['<Tab>'] = { 'select_next', 'fallback' },
+        ['<CR>'] = { 'select_and_accept', 'fallback' },
+        cmdline = {
+          ['<C-u>'] = { 'select_prev', 'fallback' },
+          ['<C-d>'] = { 'select_next', 'fallback' },
+          ['<Tab>'] = { 'select_next', 'fallback' },
+        },
+      },
+
+      sources = {
+        default = { 'lsp', 'path', 'snippets', 'buffer' },
+      },
     },
-    config = function()
-      require('luasnip.loaders.from_vscode').load()
-
-      local kind_icons = {
-        Text = '',
-        Method = '󰆧',
-        Function = '󰊕',
-        Constructor = '',
-        Field = '󰇽',
-        Variable = '󰂡',
-        Class = '󰠱',
-        Interface = '',
-        Module = '',
-        Property = '󰜢',
-        Unit = '',
-        Value = '󰎠',
-        Enum = '',
-        Keyword = '󰌋',
-        Snippet = '',
-        Color = '󰏘',
-        File = '󰈙',
-        Reference = '',
-        Folder = '󰉋',
-        EnumMember = '',
-        Constant = '󰏿',
-        Struct = '',
-        Event = '',
-        Operator = '󰆕',
-        TypeParameter = '󰅲',
-        Codeium = '',
-      }
-
-      local kind_icons_mac = {
-        Method = 'm',
-        Function = '',
-        Constructor = '',
-        Field = '',
-        Variable = '',
-        Class = '',
-        Interface = '',
-        Module = '',
-        Property = '',
-        Unit = '',
-        Value = '',
-        Enum = '',
-        Keyword = '',
-        Snippet = '',
-        Color = '',
-        File = '',
-        Reference = '',
-        Folder = '',
-        EnumMember = '',
-        Constant = '',
-        Struct = '',
-        Event = '',
-        Operator = '',
-        TypeParameter = '',
-        Codeium = '',
-      }
-
-      local cmp = require('cmp')
-      cmp.setup({
-        preselect = cmp.PreselectMode.None,
-        snippet = {
-          expand = function(args)
-            require('luasnip').lsp_expand(args.body)
-          end,
-        },
-        sources = {
-          { name = 'codeium' },
-          { name = 'luasnip' },
-          { name = 'nvim_lsp' },
-          { name = 'buffer' },
-          { name = 'path' },
-        },
-        mapping = {
-          ['<Tab>'] = cmp.mapping.select_next_item({ behavior = cmp.SelectBehavior.Insert }),
-          ['<S-Tab>'] = cmp.mapping.select_prev_item({ behavior = cmp.SelectBehavior.Insert }),
-          ['<CR>'] = cmp.mapping(
-            cmp.mapping.confirm({
-              behavior = cmp.ConfirmBehavior.Insert,
-              select = true,
-            }),
-            { 'i' }
-          ),
-        },
-        experimental = {
-          ghost_text = true,
-        },
-        formatting = {
-          format = function(entry, vim_item)
-            vim_item.kind = string.format('%s [%s]', kind_icons[vim_item.kind], vim_item.kind)
-            vim_item.menu = nil
-            return vim_item
-          end,
-        },
-
-        window = {
-          completion = {
-            border = { '╭', '─', '╮', '│', '╯', '─', '╰', '│' },
-            scrollbar = '║',
-            winhighlight = 'Normal:CmpMenu,FloatBorder:VertSplit,CursorLine:PmenuSel,Search:None',
-            autocomplete = {
-              require('cmp.types').cmp.TriggerEvent.InsertEnter,
-              require('cmp.types').cmp.TriggerEvent.TextChanged,
-            },
-          },
-          documentation = {
-            border = { '╭', '─', '╮', '│', '╯', '─', '╰', '│' },
-            winhighlight = 'NormalFloat:CmpMenu,FloatBorder:VertSplit',
-            scrollbar = '║',
-          },
-        },
-      })
-
-      cmp.setup.cmdline({ '/', '?' }, {
-        mapping = cmp.mapping.preset.cmdline(),
-        sources = {
-          { name = 'buffer' },
-        },
-      })
-
-      cmp.setup.cmdline(':', {
-        mapping = cmp.mapping.preset.cmdline(),
-        sources = cmp.config.sources({
-          { name = 'path' },
-          { name = 'cmdline' },
-        }),
-        matching = { disallow_symbol_nonprefix_matching = false },
-      })
-    end,
+    opts_extend = { "sources.default" }
   },
 
   --------------------
@@ -706,25 +603,18 @@ require('lazy').setup({
         border = 'rounded',
       })
 
-      require('lspconfig').clangd.setup({})
-      require('lspconfig').lua_ls.setup({})
-      require('lspconfig').pyright.setup({})
-      require('lspconfig').rust_analyzer.setup({})
+      local capabilities = require('blink.cmp').get_lsp_capabilities()
+      local lspconfig = require('lspconfig')
+      lspconfig.clangd.setup({ capabilities = capabilities })
+      lspconfig.lua_ls.setup({ capabilities = capabilities })
+      lspconfig.pyright.setup({ capabilities = capabilities })
+      lspconfig.rust_analyzer.setup({ capabilities = capabilities })
     end,
     keys = {
       { '<Leader>r', vim.lsp.buf.rename,                                        mode = { 'n' } },
       { 'gd',        ":lua require('telescope.builtin').lsp_definitions()<CR>", mode = { 'n' } },
       { 'gr',        ":lua require('telescope.builtin').lsp_references()<CR>",  mode = { 'n' } },
     },
-  },
-
-  --------------------
-  -- Lsp-signature
-  --------------------
-  {
-    'ray-x/lsp_signature.nvim',
-    opts = { handler_opts = { border = 'rounded' } },
-    config = true,
   },
 
   --------------------

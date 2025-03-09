@@ -558,33 +558,44 @@ require('lazy').setup({
     opts = {
       signature = { enabled = true, window = { border = 'single' } },
       completion = {
-        list = { selection = 'auto_insert' },
+        list = { selection = { preselect = false } },
         menu = {
           border = 'single',
           auto_show = function(ctx)
-            return vim.bo.buftype ~= "prompt"
+            return vim.bo.buftype ~= 'prompt'
           end,
         },
         documentation = { auto_show = true, auto_show_delay_ms = 0, window = { border = 'single' } },
-        ghost_text = { enabled = true },
+        ghost_text = { enabled = true, show_with_menu = false },
       },
       keymap = {
         ['<C-u>'] = { 'select_prev', 'fallback' },
         ['<C-d>'] = { 'select_next', 'fallback' },
         ['<Tab>'] = { 'select_next', 'fallback' },
         ['<CR>'] = { 'select_and_accept', 'fallback' },
-        cmdline = {
+      },
+      cmdline = {
+        completion = {
+          list = { selection = { preselect = false } },
+          menu = { auto_show = true },
+        },
+        keymap = {
           ['<C-u>'] = { 'select_prev', 'fallback' },
           ['<C-d>'] = { 'select_next', 'fallback' },
           ['<Tab>'] = { 'select_next', 'fallback' },
         },
       },
-
+      appearance = {
+        use_nvim_cmp_as_default = true,
+        nerd_font_variant = 'mono',
+      },
       sources = {
         default = { 'lsp', 'path', 'snippets', 'buffer' },
+        providers = { path = { opts = { trailing_slash = false, label_trailing_slash = true } } },
       },
+      fuzzy = { implementation = 'prefer_rust_with_warning' },
     },
-    opts_extend = { "sources.default" }
+    opts_extend = { 'sources.default' },
   },
 
   --------------------
